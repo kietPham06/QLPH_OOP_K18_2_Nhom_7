@@ -22,13 +22,13 @@ public class PHAddOutput {
 	}
 	
 	public void showMessage(PhongHoc ph) {
-		out.println("===============================================");
+		out.println("-------------------------");
 		out.flush();
 		out.println("Thêm phòng học thành công!");
 		out.flush();
 		out.println(ph);
 		out.flush();
-		out.println("===============================================");
+		out.println("-------------------------");
 		out.flush();
 	}
 	

@@ -35,7 +35,7 @@ public class PHPrintControl {
 		dsPH = phPrintDAO.getDSPH();
 		
 		// 2. Gửi thông điệp đến object PHPrintOutput
-		// Để hiển thị danh sách phòng học
+		// Hiển thị danh sách phòng học
 		phPrintOutput.output(dsPH); 
 	}
 	

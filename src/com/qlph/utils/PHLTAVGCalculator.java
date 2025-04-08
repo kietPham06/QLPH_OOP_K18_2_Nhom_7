@@ -18,7 +18,7 @@ public class PHLTAVGCalculator {
 		int soLuongPhongHoc = 0;
 		for (PhongHoc ph : dsPH) {
 			// Kiểm tra nếu phòng học là loại Lý thuyết
-			if (ph.getLoaiPhong().equals("Lý thuyết")) { 
+			if (ph.getLoaiPhong().equals("LT")) { 
 				tongDienTich += ph.getDienTich();
 				soLuongPhongHoc++;
 			}

@@ -5,8 +5,12 @@ import java.util.Scanner;
 
 import com.qlph.control.PHLTAVGControl;
 import com.qlph.control.PHAddControl;
+import com.qlph.control.PHCountControl;
 import com.qlph.control.PHPrintControl;
+import com.qlph.control.PHSearchControl;
+import com.qlph.control.PHUpdateControl;
 import com.qlph.control.PHDeleteControl;
+import com.qlph.control.PHFilterControl;
 
 public class PHMenu {
 	
@@ -18,6 +22,10 @@ public class PHMenu {
 	private PHPrintControl phPrintControl;
 	private PHLTAVGControl phltavgControl;
 	private PHDeleteControl phDeleteControl;
+	private PHUpdateControl phUpdateControl;
+	private PHSearchControl phSearchControl;
+	private PHCountControl phCountControl;
+	private PHFilterControl phFilterControl;
 	// Ô 3 - Methods
 	// Default Constructor
 	public PHMenu() {
@@ -47,7 +55,23 @@ public class PHMenu {
 	public void setPHDeleteControl(PHDeleteControl phDeleteControl) {
 		this.phDeleteControl = phDeleteControl;
 	}
-
+	
+	public void setPHUpdateControl(PHUpdateControl phUpdateControl) {
+		this.phUpdateControl = phUpdateControl;
+	}
+	
+	public void setPHSearchControl(PHSearchControl phSearchControl) {
+		this.phSearchControl = phSearchControl;
+	}
+	
+	public void setPHCountControl(PHCountControl phCountControl) {
+		this.phCountControl = phCountControl;
+	}
+	
+	public void setPHFilterControl(PHFilterControl phFilterControl) {
+		this.phFilterControl = phFilterControl;
+	}
+	
 	public void controlLoop() {
 		out.println("Gõ lệnh \"help\" để được hỗ trợ!");
 		out.flush();
@@ -183,6 +207,7 @@ public class PHMenu {
 
 	private void update() {
 		// TODO Auto-generated method stub
+		phUpdateControl.update();
 	}
 
 	private void delete() {
@@ -192,7 +217,7 @@ public class PHMenu {
 
 	private void search() {
 		// TODO Auto-generated method stub
-		
+		phSearchControl.search();
 	}
 
 	private void print() {
@@ -202,12 +227,12 @@ public class PHMenu {
 
 	private void count() {
 		// TODO Auto-generated method stub
-		
+		phCountControl.count();
 	}
 
 	private void filter() {
 		// TODO Auto-generated method stub
-		
+		phFilterControl.filter();
 	}
 
 	private void average() {

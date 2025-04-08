@@ -2,7 +2,7 @@ package com.qlph.database;
 
 import com.qlph.model.PhongHoc;
 
-public class PHDeleteDAO {
+public class PHSearchDAO {
 	
 	// Ô 2 - Fields
 	
@@ -11,14 +11,7 @@ public class PHDeleteDAO {
 	// Default Constructor
 	/*Không cần tạo vì java tự động tạo*/
 	
-	public void delete(PhongHoc ph) {
-		MemoryPHDB.remove(ph);
-	}
-	
 	public PhongHoc search(String maPhong, String loaiPhong) {
         return MemoryPHDB.search(maPhong, loaiPhong);
     }
-	
-	
-	
 }

@@ -33,16 +33,16 @@ public class PHLTAVGControl {
 		double results;
 		
 		// Phối hợp với các đối tượng
-		// Gửi thông điệp đến object PHLTAVGDAO
-		// 1. Lấy danh sách phòng học từ CSDL
+		// 1. Gửi thông điệp đến object PHLTAVGDAO
+		// Lấy danh sách phòng học từ CSDL
 		dSPH = phltavgdao.getDSPH();
 		
-		// Gửi thông điệp đến object PHLTAVGCalculator
-		// 2. Tính diện tích trung bình phòng học Lý thuyết từ danh sách phòng học
+		// 2. Gửi thông điệp đến object PHLTAVGCalculator
+		// Tính diện tích trung bình phòng học Lý thuyết
 		results = phltavgCalculator.calculatorAVG(dSPH);
 		
-		// Gửi thông điệp đến object PHLTAVGOutput
-		// 3. In ra kết quả sau khi tính
+		// 3. Gửi thông điệp đến object PHLTAVGOutput
+		// Hiển thị kết quả
 		phltavgOutput.printAVG(results);
 	}
 

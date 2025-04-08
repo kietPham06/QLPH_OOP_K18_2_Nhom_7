@@ -19,7 +19,7 @@ public class PHDeleteOutput {
 	}
 	
 	public void showMessage(boolean isThanhCong) {
-		out.println("===============================================");
+		out.println("-----------------------------");
 		out.flush();
 		if (isThanhCong) {
 			out.println("Xóa phòng học thành công!");
@@ -28,7 +28,7 @@ public class PHDeleteOutput {
 			out.println("Xóa phòng học thất bại!");
 			out.flush();
 		}
-		out.println("===============================================");
+		out.println("-----------------------------");
 		out.flush();
 	}
 	

@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 // Superclass
-public class PhongHoc {
+public abstract class PhongHoc {
 	
 	// Ô 2 - Fields
 	private String maPhong;
@@ -30,9 +30,7 @@ public class PhongHoc {
 	}
 	
 	// Kiểm tra phòng học đạt chuẩn
-	public boolean isDatChuan() {
-		return false;
-	}
+	public abstract boolean isDatChuan();
 	
 	// Getters and Setters
 	public String getMaPhong() {
@@ -75,9 +73,7 @@ public class PhongHoc {
 		this.ngayHoatDong = ngayHoatDong;
 	}
 	
-	public String getLoaiPhong() {
-		return null;
-	}
+	public abstract String getLoaiPhong();
 
 	// toString()
 	@Override

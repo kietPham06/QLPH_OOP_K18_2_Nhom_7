@@ -20,12 +20,12 @@ public class PHLTAVGOutput {
 	}
 	
 	public void printAVG(double results) {
-		out.println("===============================================");
+		out.println("---------------------------------------------------");
+    	out.flush();
+		out.println("[Diện tích trung bình phòng học lý thuyết] = " + results);
 		out.flush();
-		out.println("[Tổng diện tích phòng học lý thuyết] = " + results);
-		out.flush();
-		out.println("===============================================");
-		out.flush();
+		out.println("---------------------------------------------------");
+    	out.flush();
 	}
 	
 	

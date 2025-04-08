@@ -11,27 +11,47 @@ import com.qlph.model.PHMayTinh;
 import com.qlph.model.PHThiNghiem;
 import com.qlph.model.PhongHoc;
 
-public class PHAddInput {
+public class PHUpdateInput {
 	
 	// Ô 2 - Fields
-	private Scanner keyboard;
-	private PrintWriter out;
+	Scanner keyboard;
+	PrintWriter out;
 	
 	// Ô 3 - Methods
 	// Default Constructor
-	public PHAddInput() {
+	public PHUpdateInput() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	// Parameterized Constructor
-	public PHAddInput(Scanner keyboard, PrintWriter out) {
+	public PHUpdateInput(Scanner keyboard, PrintWriter out) {
 		super();
 		this.keyboard = keyboard;
 		this.out = out;
 	}
 	
-	public PhongHoc inputPH() {
+	public String inputMaPhong() {
 		String maPhong;
+		
+		out.print("Mã phòng: ");
+		out.flush();
+		maPhong = keyboard.nextLine();
+		
+		return maPhong;
+	}
+	
+	public String inputLoaiPhong() {
+		String loaiPhong;
+		
+		out.print("Loại phòng (LT - MT - TN): ");
+		out.flush();
+		loaiPhong = keyboard.nextLine();
+		
+		return loaiPhong;
+	}
+	
+	public PhongHoc inputPH(String maPhong, String loaiPhong) {
+		
 		String dayNha;
 		double dienTich;
 		int soBongDen;
@@ -40,14 +60,8 @@ public class PHAddInput {
 		SimpleDateFormat formatter;
 		Date ngayHoatDongJava = null;
 		
-		String loaiPhong;
-		
 		PhongHoc ph = null;
 		
-		out.print("Mã phòng: ");
-		out.flush();
-		maPhong = keyboard.nextLine();
-	
 		out.print("Dãy nhà: ");
 		out.flush();
 		dayNha = keyboard.nextLine();
@@ -72,9 +86,6 @@ public class PHAddInput {
 			e.printStackTrace();
 		}
 		
-		out.print("Loại phòng (LT - MT - TN): ");
-		out.flush();
-		loaiPhong = keyboard.nextLine();
 		if ("LT".equalsIgnoreCase(loaiPhong)) {
 			ph = inputPHLT(maPhong, dayNha, dienTich, soBongDen, ngayHoatDongJava);
 		}
@@ -106,6 +117,7 @@ public class PHAddInput {
 		out.print("Số lượng máy tính: ");
 		out.flush();
 		soLuongMayTinh = keyboard.nextInt();
+		keyboard.nextLine();
 		
 		phMT = new PHMayTinh(maPhong, dayNha, dienTich, soBongDen, ngayHoatDongJava, soLuongMayTinh);
 		return phMT;

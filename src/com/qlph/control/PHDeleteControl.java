@@ -28,21 +28,23 @@ public class PHDeleteControl {
 	public void delete() {
 		String maPhong;
 		String loaiPhong;
-		boolean isThanhCong;
 		
 		// Phối hợp với các đối tượng
-		// 1. Gửi thông điệp đến object PHRemoveInput
-		// Để người dùng nhập thông tin phòng cần xóa
+		// 1. Gửi thông điệp đến object PHDeleteInput
+		// Người dùng nhập thông tin phòng cần xóa
 		maPhong = phDeleteInput.inputMaPhong();
 		loaiPhong = phDeleteInput.inputLoaiPhong();
 		
-		// 2. Gửi thông điệp đến object PHRemoveDAO
-		// Xóa phòng học trong CSDL
-		isThanhCong = phDeleteDAO.delete(maPhong, loaiPhong);
-		
-		// 3. Gửi thông điệp đến object PHRemoveOuput
-		// Hiển thị thông báo xóa phòng học thành công hoặc thất bại
-		phDeleteOutput.showMessage(isThanhCong);
+		// 2. Gửi thông điệp đến object PHDeleteDAO
+		// Kiểm tra thông tin phòng và xóa phòng
+		// 3. Gửi thông điệp đến object PHDeleteOutput
+		// Hiển thị thông báo cho người dùng
+		if (phDeleteDAO.search(maPhong, loaiPhong) == null) {
+			phDeleteOutput.showMessage(false);
+		} else {
+			phDeleteOutput.showMessage(true);
+			phDeleteDAO.delete(phDeleteDAO.search(maPhong, loaiPhong));
+		}
 	}
 	
 	

@@ -5,19 +5,35 @@ import java.util.Scanner;
 
 import com.qlph.control.PHLTAVGControl;
 import com.qlph.control.PHAddControl;
+import com.qlph.control.PHCountControl;
 import com.qlph.control.PHPrintControl;
+import com.qlph.control.PHSearchControl;
+import com.qlph.control.PHUpdateControl;
 import com.qlph.control.PHDeleteControl;
+import com.qlph.control.PHFilterControl;
 import com.qlph.database.PHLTAVGDAO;
 import com.qlph.database.PHAddDAO;
+import com.qlph.database.PHCountDAO;
 import com.qlph.database.PHPrintDAO;
+import com.qlph.database.PHSearchDAO;
+import com.qlph.database.PHUpdateDAO;
 import com.qlph.database.PHDeleteDAO;
+import com.qlph.database.PHFilterDAO;
 import com.qlph.ui.PHLTAVGOutput;
 import com.qlph.ui.PHAddInput;
 import com.qlph.ui.PHAddOutput;
+import com.qlph.ui.PHCountOutput;
 import com.qlph.ui.PHMenu;
 import com.qlph.ui.PHPrintOutput;
+import com.qlph.ui.PHSearchInput;
+import com.qlph.ui.PHSearchOutput;
+import com.qlph.ui.PHUpdateInput;
+import com.qlph.ui.PHUpdateOutput;
 import com.qlph.ui.PHDeleteInput;
 import com.qlph.ui.PHDeleteOutput;
+import com.qlph.ui.PHFilterOutput;
+import com.qlph.utils.PHCountCalculator;
+import com.qlph.utils.PHFilter;
 import com.qlph.utils.PHLTAVGCalculator;
 
 public class AppQLPH {
@@ -29,31 +45,55 @@ public class AppQLPH {
 		PrintWriter out;
 		String prompt = ">";
 		
-		// Chức năng thêm
+		// Khai báo biến tham chiếu chức năng thêm
 		PHAddDAO phAddDAO;
 		PHAddInput phAddInput;
 		PHAddOutput phAddOutput;
 		PHAddControl phAddControl;
 		
-		// Chức năng in
+		// Khai báo biến tham chiếu chức năng in
 		PHPrintControl phPrintControl;
 		PHPrintOutput phPrintOutput;
 		PHPrintDAO phPrintDAO;
 		
-		// Chức năng tính trung bình diện tích phòng lý thuyết
+		// Khai báo biến tham chiếu chức năng tính trung bình diện tích phòng lý thuyết
 		PHLTAVGDAO phltavgdao;
 		PHLTAVGCalculator phltavgCalculator;
 		PHLTAVGOutput phltavgOutput;
 		PHLTAVGControl phltavgControl;
 		
 		
-		// Chức năng xóa
+		// Khai báo biến tham chiếu chức năng xóa
 		PHDeleteDAO phDeleteDAO;
 		PHDeleteInput phDeleteInput;
 		PHDeleteOutput phDeleteOutput;
 		PHDeleteControl phDeleteControl;
 		
-		// Hiển thị menu
+		// Khai báo biến tham chiếu chức năng cập nhật
+		PHUpdateDAO phUpdateDAO;
+		PHUpdateInput phUpdateInput;
+		PHUpdateOutput phUpdateOutput;
+		PHUpdateControl phUpdateControl;
+		
+		// Khai báo biến tham chiếu chức năng tìm kiếm
+		PHSearchDAO phSearchDAO;
+		PHSearchInput phSearchInput;
+		PHSearchOutput phSearchOutput;
+		PHSearchControl phSearchControl;
+		
+		// Khai báo biến tham chiếu chức năng tổng số lượng phòng học từng loại
+		PHCountDAO phCountDAO;
+		PHCountCalculator phCountCalculator;
+		PHCountOutput phCountOutput;
+		PHCountControl phCountControl;
+		
+		// Khai báo biến tham chiếu chức năng xuất ra phòng không đạt chuẩn
+		PHFilterDAO phFilterDAO;
+		PHFilter phFilter;
+		PHFilterOutput phFilterOutput;
+		PHFilterControl phFilterControl;
+		
+		// Khai báo biến tham chiếu menu
 		PHMenu menu;
 		
 		// Bước 2: Khởi tạo đối tượng trong vùng nhớ Heap
@@ -84,6 +124,30 @@ public class AppQLPH {
 		phDeleteOutput = new PHDeleteOutput(out);
 		phDeleteControl = new PHDeleteControl(phDeleteDAO, phDeleteInput, phDeleteOutput);
 		
+		// Chức năng cập nhật
+		phUpdateDAO = new PHUpdateDAO();
+		phUpdateInput = new PHUpdateInput(keyboard, out);
+		phUpdateOutput = new PHUpdateOutput(out);
+		phUpdateControl = new PHUpdateControl(phUpdateDAO, phUpdateInput, phUpdateOutput);
+		
+		// Chức năng tìm kiếm
+		phSearchDAO = new PHSearchDAO();
+		phSearchInput = new PHSearchInput(keyboard, out);
+		phSearchOutput = new PHSearchOutput(out);
+		phSearchControl = new PHSearchControl(phSearchDAO, phSearchInput, phSearchOutput);
+		
+		// Chức năng tổng số lượng phòng học từng loại
+		phCountDAO = new PHCountDAO();
+		phCountCalculator = new PHCountCalculator();
+		phCountOutput = new PHCountOutput(out);
+		phCountControl = new PHCountControl(phCountDAO, phCountCalculator, phCountOutput);
+		
+		// Chức năng xuất ra phòng không đạt chuẩn
+		phFilterDAO = new PHFilterDAO();
+		phFilter = new PHFilter();
+		phFilterOutput = new PHFilterOutput(out);
+		phFilterControl= new PHFilterControl(phFilterDAO, phFilter, phFilterOutput);
+		
 		// Hiển thị menu
 		menu = new PHMenu(keyboard, out, prompt);
 		
@@ -98,6 +162,18 @@ public class AppQLPH {
 		
 		// Gửi thông điệp đến object PHRemoveControl
 		menu.setPHDeleteControl(phDeleteControl);
+		
+		// Gửi thông điệp đến object PHUpdateControl
+		menu.setPHUpdateControl(phUpdateControl);
+		
+		// Gửi thông điệp đến object PHSearchControl
+		menu.setPHSearchControl(phSearchControl);
+		
+		// Gửi thông điệp đến object PHCountControl
+		menu.setPHCountControl(phCountControl);
+		
+		// Gửi thông điệp đến object PHFilterControl
+		menu.setPHFilterControl(phFilterControl);
 		
 		// Hiển thị tiêu đề
 		out.println("===============================================");

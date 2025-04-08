@@ -3,34 +3,34 @@ package com.qlph.ui;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-public class PHDeleteInput {
+public class PHSearchInput {
 	
 	// Ô 2 - Fields
-	Scanner keyboard;
-	PrintWriter out;
+	private Scanner keyboard;
+	private PrintWriter out;
 	
 	// Ô 3 - Methods
-	public PHDeleteInput() {
+	// Default Constructor
+	public PHSearchInput() {
 		// TODO Auto-generated constructor stub
 	}
-
-	public PHDeleteInput(Scanner keyboard, PrintWriter out) {
+	
+	// Parameterized Constructor
+    public PHSearchInput(Scanner keyboard, PrintWriter out) {
 		super();
 		this.keyboard = keyboard;
 		this.out = out;
 	}
-	
+
+
 	public String inputMaPhong() {
 		String maPhong;
-		
-		out.print("Mã phòng: ");
-		out.flush();
-		maPhong = keyboard.nextLine();
-		
-		return maPhong;
-	}
+        System.out.print("Nhập mã phòng: ");
+        maPhong = keyboard.nextLine();
+        return maPhong;
+    }
 
-	public String inputLoaiPhong() {
+    public String inputLoaiPhong() {
     	String loaiPhong;
         System.out.print("Nhập loại phòng: ");
         out.print("Loại phòng (LT - MT - TN): ");
@@ -47,6 +47,6 @@ public class PHDeleteInput {
 		}	
         return loaiPhong;
     }
-	
-	
+    
+    
 }
