@@ -1,7 +1,6 @@
 package com.qlph.database;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.qlph.model.PHLyThuyet;
 import com.qlph.model.PHMayTinh;
@@ -19,30 +18,6 @@ public class MemoryPHDB {
 		phDB = new ArrayList<PhongHoc>();
 	// Tạo object để test
 		
-		// 1. PHMayTinh - Đạt chuẩn
-		phDB.add(new PHMayTinh("MT01", "A1", 60.0, 6, new Date(), 40));
-		// Diện tích 60m2, 6 bóng đèn (>= 60/10), 40 máy tính (>= 60/1.5 = 40) -> Đạt chuẩn
-
-		// 2. PHMayTinh - Không đạt chuẩn (thiếu máy tính)
-		phDB.add(new PHMayTinh("MT02", "A2", 60.0, 6, new Date(), 30));
-		// Diện tích 60m2, 6 bóng đèn (>= 60/10), 30 máy tính (< 60/1.5 = 40) -> Không đạt chuẩn
-
-		// 3. PHLyThuyet - Đạt chuẩn
-		phDB.add(new PHLyThuyet("LT01", "B1", 50.0, 5, new Date(), true));
-		// Diện tích 50m2, 5 bóng đèn (>= 50/10), có máy chiếu -> Đạt chuẩn
-
-		// 4. PHLyThuyet - Không đạt chuẩn (không có máy chiếu)
-		phDB.add(new PHLyThuyet("LT02", "B2", 50.0, 5, new Date(), false));
-		// Diện tích 50m2, 5 bóng đèn (>= 50/10), không máy chiếu -> Không đạt chuẩn
-
-		// 5. PHThiNghiem - Đạt chuẩn
-		phDB.add(new PHThiNghiem("TN01", "C1", 80.0, 8, new Date(), "Hóa học", 30, true));
-		// Diện tích 80m2, 8 bóng đèn (>= 80/10), có bồn rửa -> Đạt chuẩn
-
-		// 6. PHThiNghiem - Không đạt chuẩn (thiếu bóng đèn)
-		phDB.add(new PHThiNghiem("TN02", "C2", 80.0, 7, new Date(), "Sinh học", 25, true));
-		// Diện tích 80m2, 7 bóng đèn (< 80/10), có bồn rửa -> Không đạt chuẩn
-		
 	}
 	
 	// Ô 3 - Methods
@@ -54,8 +29,15 @@ public class MemoryPHDB {
 		return phDB;
 	}
 	
-	public static void remove(PhongHoc ph) {
-		phDB.remove(ph);
+	public static boolean remove(String maPhong, String loaiPhong) {
+	    for (int i = phDB.size() - 1; i >= 0; i--) {
+	        PhongHoc ph = phDB.get(i);
+	        if (ph.getMaPhong().equals(maPhong) && ph.getLoaiPhong().equals(loaiPhong)) {
+	            phDB.remove(i);
+	            return true; // Xóa thành công
+	        }
+	    }
+	    return false; // Không tìm thấy
 	}
 	
 	public static PhongHoc search(String maPhong, String loaiPhong) {

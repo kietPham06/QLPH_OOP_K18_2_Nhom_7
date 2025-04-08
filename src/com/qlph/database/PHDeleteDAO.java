@@ -11,8 +11,8 @@ public class PHDeleteDAO {
 	// Default Constructor
 	/*Không cần tạo vì java tự động tạo*/
 	
-	public void delete(PhongHoc ph) {
-		MemoryPHDB.remove(ph);
+	public boolean delete(String maPhong, String loaiPhong) {
+		return MemoryPHDB.remove(loaiPhong, loaiPhong);
 	}
 	
 	public PhongHoc search(String maPhong, String loaiPhong) {
