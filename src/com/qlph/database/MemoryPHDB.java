@@ -73,7 +73,7 @@ public class MemoryPHDB {
 	public static boolean delete(String maPhong, String loaiPhong) {
 	    for (int i = phDB.size() - 1; i >= 0; i--) {
 	        PhongHoc ph = phDB.get(i);
-	        if (ph.getMaPhong().equals(maPhong) && ph.getLoaiPhong().equals(loaiPhong)) {
+	        if (ph.getMaPhong().equalsIgnoreCase(maPhong) && ph.getLoaiPhong().equalsIgnoreCase(loaiPhong)) {
 	            phDB.remove(i);
 	            return true; // Xóa thành công
 	        }

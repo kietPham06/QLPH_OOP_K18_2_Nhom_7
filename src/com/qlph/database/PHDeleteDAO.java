@@ -12,7 +12,7 @@ public class PHDeleteDAO {
 	/*Không cần tạo vì java tự động tạo*/
 	
 	public boolean delete(String maPhong, String loaiPhong) {
-		return MemoryPHDB.delete(loaiPhong, loaiPhong);
+		return MemoryPHDB.delete(maPhong, loaiPhong);
 	}
 	
 	public PhongHoc search(String maPhong, String loaiPhong) {

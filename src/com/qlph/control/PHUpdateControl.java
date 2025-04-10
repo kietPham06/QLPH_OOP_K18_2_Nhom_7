@@ -32,20 +32,13 @@ public class PHUpdateControl {
         PhongHoc ph;
         PhongHoc updatedPH;
         
-        // Phối hợp với các đối tượng
         // 1. Gửi thông điệp đến object PHUpdateInput
-		// Người dùng nhập thông tin phòng cần xóa
+        // Người dùng nhập thông tin phòng cần cập nhật
         maPhong = phUpdateInput.inputMaPhong();
         loaiPhong = phUpdateInput.inputLoaiPhong();
         
         // 2. Gửi thông điệp đến object PHUpdateDAO
         // Kiểm tra thông tin phòng học và cập nhật phòng
-        
-        // 3. Gửi thông điệp đến object PHUpdateOutput
-        // Hiển thị thông báo cho người dùng
-        maPhong = phUpdateInput.inputMaPhong();
-        loaiPhong = phUpdateInput.inputLoaiPhong();
-        
         if (phUpdateDAO.search(maPhong, loaiPhong) == null) {
             phUpdateOutput.showMessage(null); // Phòng không tồn tại
         } else {

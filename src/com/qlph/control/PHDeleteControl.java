@@ -27,22 +27,27 @@ public class PHDeleteControl {
 	}
 	
 	public void delete() {
+		PhongHoc ph;
+		String maPhong;
+		String loaiPhong;
+		boolean xoaThanhCong;
+		
 	    // 1. Gửi thông điệp đến object PHDeleteInput
 	    // Người dùng nhập thông tin phòng cần xóa
-	    String maPhong = phDeleteInput.inputMaPhong();
-	    String loaiPhong = phDeleteInput.inputLoaiPhong();
+		maPhong = phDeleteInput.inputMaPhong();
+		loaiPhong = phDeleteInput.inputLoaiPhong();
 	    
 	    // 2. Gửi thông điệp đến object PHDeleteDAO
 	    // Tìm phòng và kiểm tra xem có tồn tại không
-	    PhongHoc phongHoc = phDeleteDAO.search(maPhong, loaiPhong);
-	    boolean phongTonTai = (phongHoc != null);
+	    ph = phDeleteDAO.search(maPhong, loaiPhong);
 	    
-	    // Thử xóa phòng nếu nó tồn tại
-	    boolean xoaThanhCong = phongTonTai && phDeleteDAO.delete(maPhong, loaiPhong);
-	    
-	    // 3. Gửi thông điệp đến object PHDeleteOutput
-	    // Hiển thị thông báo cho người dùng (thành công hay thất bại)
-	    phDeleteOutput.showMessage(xoaThanhCong);
+	    // 3. Kiểm tra và xử lý xóa
+	    if (ph == null) {
+	    	phDeleteOutput.showMessage(false);
+	    } else {
+	    	xoaThanhCong = phDeleteDAO.delete(maPhong, loaiPhong);
+	    	phDeleteOutput.showMessage(xoaThanhCong);
+	    }
 	}
 
 	
