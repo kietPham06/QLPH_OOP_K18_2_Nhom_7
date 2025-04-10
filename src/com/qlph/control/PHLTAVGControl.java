@@ -30,7 +30,7 @@ public class PHLTAVGControl {
 	
 	public void average() {
 		ArrayList<PhongHoc> dSPH;
-		double results;
+		double DienTichTrungBinh;
 		
 		// Phối hợp với các đối tượng
 		// 1. Gửi thông điệp đến object PHLTAVGDAO
@@ -39,11 +39,11 @@ public class PHLTAVGControl {
 		
 		// 2. Gửi thông điệp đến object PHLTAVGCalculator
 		// Tính diện tích trung bình phòng học Lý thuyết
-		results = phltavgCalculator.calculatorAVG(dSPH);
+		DienTichTrungBinh = phltavgCalculator.calculatorAVG(dSPH);
 		
 		// 3. Gửi thông điệp đến object PHLTAVGOutput
 		// Hiển thị kết quả
-		phltavgOutput.printAVG(results);
+		phltavgOutput.printAVG(DienTichTrungBinh);
 	}
 
 	

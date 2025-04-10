@@ -43,7 +43,7 @@ public class PHSearchControl {
 		
 		// 3. Gửi thông điệp đến object PHSearchOutput
 		// Hiển thị thông tin phòng
-		phSearchOutput.hienThiThongTin(ph);
+		phSearchOutput.printSearch(ph);
 	}
 }
 

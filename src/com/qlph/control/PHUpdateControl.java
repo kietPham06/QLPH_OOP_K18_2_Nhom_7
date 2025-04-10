@@ -43,17 +43,15 @@ public class PHUpdateControl {
         
         // 3. Gửi thông điệp đến object PHUpdateOutput
         // Hiển thị thông báo cho người dùng
+        maPhong = phUpdateInput.inputMaPhong();
+        loaiPhong = phUpdateInput.inputLoaiPhong();
+        
         if (phUpdateDAO.search(maPhong, loaiPhong) == null) {
-            phUpdateOutput.showMessage(null);
+            phUpdateOutput.showMessage(null); // Phòng không tồn tại
         } else {
-        	ph = phUpdateInput.inputPH(maPhong, loaiPhong);
-            // Gọi phương thức update để cập nhật dữ liệu trong MemoryPHDB
-            updatedPH = phUpdateDAO.update(ph);
-            if (updatedPH != null) {
-                phUpdateOutput.showMessage(updatedPH);
-            } else {
-                phUpdateOutput.showMessage(null); // Hiển thị lỗi nếu cập nhật thất bại
-            }
+            ph = phUpdateInput.inputPH(maPhong, loaiPhong); // Người dùng nhập dữ liệu phòng cần cập nhật
+            updatedPH = phUpdateDAO.update(ph); // Cập nhật phòng học trong CSDL
+            phUpdateOutput.showMessage(updatedPH); // Hiển thị kết quả, dù thành công hay thất bại
         }
     }
 }

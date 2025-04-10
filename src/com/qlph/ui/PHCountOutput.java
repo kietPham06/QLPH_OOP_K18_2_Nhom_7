@@ -19,7 +19,7 @@ public class PHCountOutput {
 		this.out = out;
 	}
 	
-	public void Countprint(int Countphlt,int Countphmt,int Countphtn) {
+	public void countPrint(int Countphlt,int Countphmt,int Countphtn) {
 		out.println("-------------------------------------------------");
 		out.flush();
 		out.println("[Tổng số lượng phòng học lý thuyết]= " + Countphlt);

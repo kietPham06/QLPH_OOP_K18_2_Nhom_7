@@ -21,7 +21,7 @@ public class PHSearchOutput {
 		this.out = out;
 	}
 
-	public void hienThiThongTin(PhongHoc phong) {
+	public void printSearch(PhongHoc phong) {
         out.println("-------------------------");
     	out.flush();
         if (phong == null) {

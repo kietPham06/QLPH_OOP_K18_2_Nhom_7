@@ -41,13 +41,13 @@ public class PHCountControl {
 		
 		// 2. Gửi thông điệp đến object PHCountCalculator
 		// Tính số lượng từng loại phòng
-		soLuongPHLyThuyet = phCountCalculator.Countphlt(dSPH);
-		soLuongPHMayTinh = phCountCalculator.Countphmt(dSPH);
-		soLuongPHThiNghiem = phCountCalculator.Countphtn(dSPH);
+		soLuongPHLyThuyet = phCountCalculator.countPHLT(dSPH);
+		soLuongPHMayTinh = phCountCalculator.countPHMT(dSPH);
+		soLuongPHThiNghiem = phCountCalculator.countPHTN(dSPH);
 		
 		// 3. Gửi thông điệp đến object PHCountOutput
 		// Hiển thị số lượng từng loại phòng
-		phCountOutput.Countprint(soLuongPHLyThuyet, soLuongPHMayTinh, soLuongPHThiNghiem);
+		phCountOutput.countPrint(soLuongPHLyThuyet, soLuongPHMayTinh, soLuongPHThiNghiem);
 	}
 	
 	

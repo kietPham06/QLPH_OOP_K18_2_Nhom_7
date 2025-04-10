@@ -13,34 +13,34 @@ public class PHCountCalculator {
 	// Default Constructor
 	/*Không cần tạo vì java tự động tạo*/
 	
-	public int Countphlt(ArrayList<PhongHoc> getPhongHocs) {
-		int phlt = 0;
-		for (PhongHoc ph : getPhongHocs) {
+	public int countPHLT(ArrayList<PhongHoc> dSPH) {
+		int soLuong = 0;
+		for (PhongHoc ph : dSPH) {
 			// Kiểm tra nếu phòng học là loại lý thuyết
 			if (ph.getLoaiPhong().equals("LT")) { 
-				phlt ++;
+				soLuong++;
 			}
 		}
-		return phlt;
+		return soLuong;
 	}
-	public int Countphmt(ArrayList<PhongHoc> getPhongHocs) {
-		int phmt = 0;
-		for (PhongHoc ph : getPhongHocs) {
+	public int countPHMT(ArrayList<PhongHoc> dSPH) {
+		int soLuong = 0;
+		for (PhongHoc ph : dSPH) {
 			// Kiểm tra nếu phòng học là loại lý thuyết
 			if (ph.getLoaiPhong().equals("MT")) { 
-				phmt ++;
+				soLuong++;
 			}
 		}
-		return phmt;
+		return soLuong;
 	}
-	public int Countphtn(ArrayList<PhongHoc> getPhongHocs) {
-		int phtn = 0;
-		for (PhongHoc ph : getPhongHocs) {
+	public int countPHTN(ArrayList<PhongHoc> dSPH) {
+		int soLuong = 0;
+		for (PhongHoc ph : dSPH) {
 			// Kiểm tra nếu phòng học là loại lý thuyết
 			if (ph.getLoaiPhong().equals("TN")) { 
-				phtn ++;
+				soLuong++;
 			}
 		}
-		return phtn;
+		return soLuong;
 	}
 }

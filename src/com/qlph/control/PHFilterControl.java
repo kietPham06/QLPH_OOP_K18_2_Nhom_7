@@ -41,11 +41,11 @@ public class PHFilterControl {
 		// Lọc ra các phòng không đạt chuẩn
 		// 3. Gửi thông điệp đến object PHFilterOutput
 		// Hiển thị các phòng không đạt chuẩn
-		if (dSPH.isEmpty()) {
-			phFilterOutput.DSPHIsEmpty();
+		if (dSPH.isEmpty()) { // Nếu danh sách phòng học trống
+			phFilterOutput.DSPHIsEmpty(); // Yêu cầu người dùng thêm phòng
 		} else {
-			dSPKDC = phFilter.filterPH(dSPH);
-			phFilterOutput.filterPrint(dSPKDC);
+			dSPKDC = phFilter.filterPH(dSPH); // Lọc danh sách phòng học
+			phFilterOutput.printFilter(dSPKDC);	// In ra phòng không đạt chuẩn
 		}
 	}
 	
