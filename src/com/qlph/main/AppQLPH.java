@@ -102,55 +102,57 @@ public class AppQLPH {
 		out = new PrintWriter(System.out);
 		
 		// Chức năng thêm
-		phAddDAO = new PHAddDAO();
-		phAddInput = new PHAddInput(keyboard, out);
-		phAddOutput = new PHAddOutput(out);
-		phAddControl = new PHAddControl(phAddDAO, phAddInput, phAddOutput);
+		phAddDAO /* Bước 3 */ = /* Bước 2 */ new PHAddDAO();
+		phAddInput /* Bước 3 */ = /* Bước 2 */ new PHAddInput(keyboard, out);
+		phAddOutput /* Bước 3 */ = /* Bước 2 */ new PHAddOutput(out);
+		phAddControl /* Bước 3 */ = /* Bước 2 */ new PHAddControl(phAddDAO, phAddInput, phAddOutput);
 		
 		// Chức năng in
-		phPrintDAO = new PHPrintDAO();
-		phPrintOutput = new PHPrintOutput(out);
-		phPrintControl = new PHPrintControl(phPrintDAO, phPrintOutput);
+		phPrintDAO /* Bước 3 */ = /* Bước 2 */ new PHPrintDAO();
+		phPrintOutput /* Bước 3 */ = /* Bước 2 */ new PHPrintOutput(out);
+		phPrintControl /* Bước 3 */ = /* Bước 2 */ new PHPrintControl(phPrintDAO, phPrintOutput);
 	
 		// Chức năng tính trung bình diện tích phòng lý thuyết
-		phltavgdao = new PHLTAVGDAO();
-		phltavgCalculator = new PHLTAVGCalculator();
-		phltavgOutput = new PHLTAVGOutput(out);
-		phltavgControl = new PHLTAVGControl(phltavgdao, phltavgCalculator, phltavgOutput);
+		phltavgdao /* Bước 3 */ = /* Bước 2 */ new PHLTAVGDAO();
+		phltavgCalculator /* Bước 3 */ = /* Bước 2 */ new PHLTAVGCalculator();
+		phltavgOutput /* Bước 3 */ = /* Bước 2 */ new PHLTAVGOutput(out);
+		phltavgControl /* Bước 3 */ = /* Bước 2 */ new PHLTAVGControl(phltavgdao, phltavgCalculator, phltavgOutput);
 		
 		// Chức năng xóa
-		phDeleteDAO = new PHDeleteDAO();
-		phDeleteInput = new PHDeleteInput(keyboard, out);
-		phDeleteOutput = new PHDeleteOutput(out);
-		phDeleteControl = new PHDeleteControl(phDeleteDAO, phDeleteInput, phDeleteOutput);
+		phDeleteDAO /* Bước 3 */ = /* Bước 2 */ new PHDeleteDAO();
+		phDeleteInput /* Bước 3 */ = /* Bước 2 */ new PHDeleteInput(keyboard, out);
+		phDeleteOutput /* Bước 3 */ = /* Bước 2 */ new PHDeleteOutput(out);
+		phDeleteControl /* Bước 3 */ = /* Bước 2 */ new PHDeleteControl(phDeleteDAO, phDeleteInput, phDeleteOutput);
 		
 		// Chức năng cập nhật
-		phUpdateDAO = new PHUpdateDAO();
-		phUpdateInput = new PHUpdateInput(keyboard, out);
-		phUpdateOutput = new PHUpdateOutput(out);
-		phUpdateControl = new PHUpdateControl(phUpdateDAO, phUpdateInput, phUpdateOutput);
+		phUpdateDAO /* Bước 3 */ = /* Bước 2 */ new PHUpdateDAO();
+		phUpdateInput /* Bước 3 */ = /* Bước 2 */ new PHUpdateInput(keyboard, out);
+		phUpdateOutput /* Bước 3 */ = /* Bước 2 */ new PHUpdateOutput(out);
+		phUpdateControl /* Bước 3 */ = /* Bước 2 */ new PHUpdateControl(phUpdateDAO, phUpdateInput, phUpdateOutput);
 		
 		// Chức năng tìm kiếm
-		phSearchDAO = new PHSearchDAO();
-		phSearchInput = new PHSearchInput(keyboard, out);
-		phSearchOutput = new PHSearchOutput(out);
-		phSearchControl = new PHSearchControl(phSearchDAO, phSearchInput, phSearchOutput);
+		phSearchDAO /* Bước 3 */ = /* Bước 2 */ new PHSearchDAO();
+		phSearchInput /* Bước 3 */ = /* Bước 2 */ new PHSearchInput(keyboard, out);
+		phSearchOutput /* Bước 3 */ = /* Bước 2 */ new PHSearchOutput(out);
+		phSearchControl /* Bước 3 */ = /* Bước 2 */ new PHSearchControl(phSearchDAO, phSearchInput, phSearchOutput);
 		
 		// Chức năng tổng số lượng phòng học từng loại
-		phCountDAO = new PHCountDAO();
-		phCountCalculator = new PHCountCalculator();
-		phCountOutput = new PHCountOutput(out);
-		phCountControl = new PHCountControl(phCountDAO, phCountCalculator, phCountOutput);
+		phCountDAO /* Bước 3 */ = /* Bước 2 */ new PHCountDAO();
+		phCountCalculator /* Bước 3 */ = /* Bước 2 */ new PHCountCalculator();
+		phCountOutput /* Bước 3 */ = /* Bước 2 */ new PHCountOutput(out);
+		phCountControl /* Bước 3 */ = /* Bước 2 */ new PHCountControl(phCountDAO, phCountCalculator, phCountOutput);
 		
 		// Chức năng xuất ra phòng không đạt chuẩn
-		phFilterDAO = new PHFilterDAO();
-		phFilter = new PHFilter();
-		phFilterOutput = new PHFilterOutput(out);
-		phFilterControl= new PHFilterControl(phFilterDAO, phFilter, phFilterOutput);
+		phFilterDAO /* Bước 3 */ = /* Bước 2 */ new PHFilterDAO();
+		phFilter /* Bước 3 */ = /* Bước 2 */ new PHFilter();
+		phFilterOutput /* Bước 3 */ = /* Bước 2 */ new PHFilterOutput(out);
+		phFilterControl /* Bước 3 */ = /* Bước 2 */ new PHFilterControl(phFilterDAO, phFilter, phFilterOutput);
 		
 		// Hiển thị menu
-		menu = new PHMenu(keyboard, out, prompt);
+		menu /* Bước 3 */ = /* Bước 2 */ new PHMenu(keyboard, out, prompt);
 		
+		
+		// 
 		// Gửi thông điệp đến object PHAddControl
 		menu.setPHAddControl(phAddControl);
 		

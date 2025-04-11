@@ -30,6 +30,7 @@ public class PHUpdateControl {
         String maPhong;
         String loaiPhong;
         PhongHoc ph;
+        PhongHoc newPH;
         PhongHoc updatedPH;
         
         // 1. Gửi thông điệp đến object PHUpdateInput
@@ -39,12 +40,21 @@ public class PHUpdateControl {
         
         // 2. Gửi thông điệp đến object PHUpdateDAO
         // Kiểm tra thông tin phòng học và cập nhật phòng
-        if (phUpdateDAO.search(maPhong, loaiPhong) == null) {
-            phUpdateOutput.showMessage(null); // Phòng không tồn tại
+        // 3. Gửi thông điệp đến object PHUpdateOutput
+        // Hiển thị thông báo cho người dùng
+        
+        ph = phUpdateDAO.search(maPhong, loaiPhong);
+        // Kiểm tra phòng học trong CSDL
+        if (ph == null) {
+        	// Phòng không tồn tại
+            phUpdateOutput.showMessage(null);
         } else {
-            ph = phUpdateInput.inputPH(maPhong, loaiPhong); // Người dùng nhập dữ liệu phòng cần cập nhật
-            updatedPH = phUpdateDAO.update(ph); // Cập nhật phòng học trong CSDL
-            phUpdateOutput.showMessage(updatedPH); // Hiển thị kết quả, dù thành công hay thất bại
+        	// Người dùng nhập dữ liệu phòng cần cập nhật
+        	newPH = phUpdateInput.inputPH(maPhong, loaiPhong);
+            // Cập nhật phòng học trong CSDL
+            updatedPH = phUpdateDAO.update(newPH);
+            // Hiển thị thông báo cho người dùng
+            phUpdateOutput.showMessage(updatedPH);
         }
     }
 }

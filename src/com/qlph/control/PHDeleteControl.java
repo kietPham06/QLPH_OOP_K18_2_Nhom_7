@@ -38,14 +38,19 @@ public class PHDeleteControl {
 		loaiPhong = phDeleteInput.inputLoaiPhong();
 	    
 	    // 2. Gửi thông điệp đến object PHDeleteDAO
-	    // Tìm phòng và kiểm tra xem có tồn tại không
-	    ph = phDeleteDAO.search(maPhong, loaiPhong);
-	    
-	    // 3. Kiểm tra và xử lý xóa
+		// Kiểm tra phòng học và xử lý xóa
+		// 3. Gửi thông điệp đến object PHDeleleOutput
+	    // Hiển thị thông báo cho người dùng
+		
+	    ph = phDeleteDAO.search(maPhong, loaiPhong);  
+	    // Kiểm tra phòng học trong CSDL
 	    if (ph == null) {
+	    	// Hiển thị thông báo
 	    	phDeleteOutput.showMessage(false);
 	    } else {
+	    	// Thực hiện thao tác xóa trong CSDL
 	    	xoaThanhCong = phDeleteDAO.delete(maPhong, loaiPhong);
+	    	// Hiển thị thông báo
 	    	phDeleteOutput.showMessage(xoaThanhCong);
 	    }
 	}

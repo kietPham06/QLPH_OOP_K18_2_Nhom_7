@@ -22,18 +22,24 @@ public class PHUpdateOutput {
 	}
 	
 	public void showMessage(PhongHoc ph) {
-        out.println("-------------------------");
-    	out.flush();
 		if (ph == null) {
+			out.println("-------------------------");
+	    	out.flush();
 			out.println("Phòng học không tồn tại!");
+			out.flush();
+			out.println("-------------------------");
+	    	out.flush();
 		} else {
+			out.println("------------------------------");
+			out.flush();
 			out.println("Cập nhật phòng học thành công!");
 			out.flush();
 			out.println(ph);
+			out.flush();
+			out.println("------------------------------");
+			out.flush();
 		}
-		out.flush();
-        out.println("-------------------------");
-		out.flush();
 	}
+	
 	
 }

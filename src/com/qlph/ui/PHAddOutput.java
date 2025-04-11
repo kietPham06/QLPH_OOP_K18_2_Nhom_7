@@ -30,13 +30,13 @@ public class PHAddOutput {
 			out.println("-------------------------");
 			out.flush();
 		} else {
-			out.println("-------------------------");
+			out.println("-----------------------------");
 			out.flush();
 			out.println("Thêm phòng học thành công!");
 			out.flush();
 			out.println(ph);
 			out.flush();
-			out.println("-------------------------");
+			out.println("-----------------------------");
 			out.flush();
 		}
 	}

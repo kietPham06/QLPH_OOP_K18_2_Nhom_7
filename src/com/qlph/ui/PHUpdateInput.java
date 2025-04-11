@@ -62,6 +62,13 @@ public class PHUpdateInput {
 		
 		PhongHoc ph = null;
 		
+        out.println("-------------------------------------------------------------");
+    	out.flush();
+		out.println("Phòng học đã được tìm thấy. Vui lòng nhập thông tin cập nhật.");
+		out.flush();
+        out.println("-------------------------------------------------------------");
+    	out.flush();
+		
 		out.print("Dãy nhà: ");
 		out.flush();
 		dayNha = keyboard.nextLine();

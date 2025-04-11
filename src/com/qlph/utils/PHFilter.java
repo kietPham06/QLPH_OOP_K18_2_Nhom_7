@@ -15,7 +15,6 @@ public class PHFilter {
 	
 	public ArrayList<PhongHoc> filterPH(ArrayList<PhongHoc> dSPH) {
 	    ArrayList<PhongHoc> dsPKDC = new ArrayList<>();
-	        
 	    for (PhongHoc ph : dSPH) {
 	        if (!ph.isDatChuan()) {
 	        	dsPKDC.add(ph);

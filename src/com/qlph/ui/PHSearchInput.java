@@ -32,7 +32,6 @@ public class PHSearchInput {
 
     public String inputLoaiPhong() {
     	String loaiPhong;
-        System.out.print("Nhập loại phòng: ");
         out.print("Loại phòng (LT - MT - TN): ");
 		out.flush();
 		loaiPhong = keyboard.nextLine();

@@ -31,15 +31,15 @@ public class PHAddControl {
 		
 		// Phối hợp với các đối tượng
 		// 1. Gửi thông điệp đến object PHAddInput
-		// Người dùng nhập vào
+		// Người dùng nhập dữ liệu từ bàn phím
 		ph = phAddInput.inputPH();
 		
 		// 2. Gửi thông điệp đến object PHAddDAO
-		// Thêm phòng học vừa được nhập vào CSDL
+		// Thêm phòng học vào CSDL
 		phAddDAO.insert(ph);
 		
 		// 3. Gửi thông điệp đến object PHAddOuput
-		// Để hiển thị kết quả cho user
+		// Hiển thị kết quả cho người dùng
 		phAddOutput.showMessage(ph);
 	}
 	

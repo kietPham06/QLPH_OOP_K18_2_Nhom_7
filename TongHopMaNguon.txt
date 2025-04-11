@@ -1,0 +1,2288 @@
+package com.qlph.control;
+
+import com.qlph.database.PHAddDAO;
+import com.qlph.model.PhongHoc;
+import com.qlph.ui.PHAddInput;
+import com.qlph.ui.PHAddOutput;
+
+public class PHAddControl {
+	
+	// Ô 2 - Fields
+	private PHAddDAO phAddDAO;
+	private PHAddInput phAddInput;
+	private PHAddOutput phAddOutput;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHAddControl() {
+		// TODO Auto-generated constructor stub
+	}
+
+	// Parameterized Constructor
+	public PHAddControl(PHAddDAO phAddDAO, PHAddInput phAddInput, PHAddOutput phAddOutput) {
+		super();
+		this.phAddDAO = phAddDAO;
+		this.phAddInput = phAddInput;
+		this.phAddOutput = phAddOutput;
+	}
+	
+	public void add() {
+		PhongHoc ph;
+		
+		// Phối hợp với các đối tượng
+		// 1. Gửi thông điệp đến object PHAddInput
+		// Người dùng nhập dữ liệu từ bàn phím
+		ph = phAddInput.inputPH();
+		
+		// 2. Gửi thông điệp đến object PHAddDAO
+		// Thêm phòng học vào CSDL
+		phAddDAO.insert(ph);
+		
+		// 3. Gửi thông điệp đến object PHAddOuput
+		// Hiển thị kết quả cho người dùng
+		phAddOutput.showMessage(ph);
+	}
+	
+	
+}
+package com.qlph.control;
+
+import java.util.ArrayList;
+
+import com.qlph.database.PHCountDAO;
+import com.qlph.model.PhongHoc;
+import com.qlph.ui.PHCountOutput;
+import com.qlph.utils.PHCountCalculator;
+
+public class PHCountControl {
+	
+	// Ô 2 - Fields
+	private PHCountDAO phCountDAO;
+	private PHCountCalculator phCountCalculator;
+	private PHCountOutput phCountOutput;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHCountControl() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	// Parameterized Constructor
+	public PHCountControl(PHCountDAO phCountDAO, PHCountCalculator phCountCalculator, PHCountOutput phCountOutput) {
+		super();
+		this.phCountDAO = phCountDAO;
+		this.phCountCalculator = phCountCalculator;
+		this.phCountOutput = phCountOutput;
+	}
+
+	public void count() {
+		ArrayList<PhongHoc> dSPH;
+		int soLuongPHLyThuyet;
+		int soLuongPHMayTinh;
+		int soLuongPHThiNghiem;
+		
+		// Phối hợp với các đối tượng
+		// 1. Gửi thông điệp đến object PHCountDAO
+		// Lấy danh sách phòng học từ CSDL
+		dSPH = phCountDAO.getDSPH();
+		
+		// 2. Gửi thông điệp đến object PHCountCalculator
+		// Tính số lượng từng loại phòng
+		soLuongPHLyThuyet = phCountCalculator.countPHLT(dSPH);
+		soLuongPHMayTinh = phCountCalculator.countPHMT(dSPH);
+		soLuongPHThiNghiem = phCountCalculator.countPHTN(dSPH);
+		
+		// 3. Gửi thông điệp đến object PHCountOutput
+		// Hiển thị số lượng từng loại phòng
+		phCountOutput.countPrint(soLuongPHLyThuyet, soLuongPHMayTinh, soLuongPHThiNghiem);
+	}
+	
+	
+}
+package com.qlph.control;
+
+import com.qlph.database.PHDeleteDAO;
+import com.qlph.model.PhongHoc;
+import com.qlph.ui.PHDeleteInput;
+import com.qlph.ui.PHDeleteOutput;
+
+public class PHDeleteControl {
+		
+	// Ô 2 - Fields
+	private PHDeleteDAO phDeleteDAO;
+	private PHDeleteInput phDeleteInput;
+	private PHDeleteOutput phDeleteOutput;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHDeleteControl() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	// Parameterized Constructor
+	public PHDeleteControl(PHDeleteDAO phDeleteDAO, PHDeleteInput phDeleteInput, PHDeleteOutput phDeleteOutput) {
+		super();
+		this.phDeleteDAO = phDeleteDAO;
+		this.phDeleteInput = phDeleteInput;
+		this.phDeleteOutput = phDeleteOutput;
+	}
+	
+	public void delete() {
+		PhongHoc ph;
+		String maPhong;
+		String loaiPhong;
+		boolean xoaThanhCong;
+		
+	    // 1. Gửi thông điệp đến object PHDeleteInput
+	    // Người dùng nhập thông tin phòng cần xóa
+		maPhong = phDeleteInput.inputMaPhong();
+		loaiPhong = phDeleteInput.inputLoaiPhong();
+	    
+	    // 2. Gửi thông điệp đến object PHDeleteDAO
+		// Kiểm tra phòng học và xử lý xóa
+		// 3. Gửi thông điệp đến object PHDeleleOutput
+	    // Hiển thị thông báo cho người dùng
+		
+	    ph = phDeleteDAO.search(maPhong, loaiPhong);  
+	    // Kiểm tra phòng học trong CSDL
+	    if (ph == null) {
+	    	// Hiển thị thông báo
+	    	phDeleteOutput.showMessage(false);
+	    } else {
+	    	// Thực hiện thao tác xóa trong CSDL
+	    	xoaThanhCong = phDeleteDAO.delete(maPhong, loaiPhong);
+	    	// Hiển thị thông báo
+	    	phDeleteOutput.showMessage(xoaThanhCong);
+	    }
+	}
+
+	
+}
+package com.qlph.control;
+
+import java.util.ArrayList;
+
+import com.qlph.database.PHFilterDAO;
+import com.qlph.model.PhongHoc;
+import com.qlph.ui.PHFilterOutput;
+import com.qlph.utils.PHFilter;
+
+public class PHFilterControl {
+	
+	// Ô 2 - Fields
+	private PHFilterDAO phFilterDAO;
+	private PHFilter phFilter;
+	private PHFilterOutput phFilterOutput;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHFilterControl() {
+		// TODO Auto-generated constructor stub
+	}
+
+	// Parameterized Constructor
+	public PHFilterControl(PHFilterDAO phFilterDAO, PHFilter phFilter, PHFilterOutput phFilterOutput) {
+		super();
+		this.phFilterDAO = phFilterDAO;
+		this.phFilter = phFilter;
+		this.phFilterOutput = phFilterOutput;
+	}
+	
+	public void filter() {
+		ArrayList<PhongHoc> dSPH;
+		ArrayList<PhongHoc> dSPKDC;
+		
+		// Phối hợp với các đối tượng
+		// 1. Gửi thông điệp đến object PHFilterDAO
+		// Lấy ra danh sách phòng học từ CSDL
+		dSPH = phFilterDAO.getDSPH();
+		
+		// 2. Gửi thông điệp đến object PHFilter
+		// Lọc ra các phòng không đạt chuẩn
+		// 3. Gửi thông điệp đến object PHFilterOutput
+		// Hiển thị các phòng không đạt chuẩn
+		
+		 // Nếu danh sách phòng học trống
+		if (dSPH.isEmpty()) {
+			// Yêu cầu người dùng thêm phòng
+			phFilterOutput.DSPHIsEmpty();
+		} else {
+			// Lọc danh sách phòng học
+			dSPKDC = phFilter.filterPH(dSPH);
+			// In ra phòng không đạt chuẩn
+			phFilterOutput.printFilter(dSPKDC);
+		}
+	}
+	
+	
+}
+package com.qlph.control;
+
+import java.util.ArrayList;
+
+import com.qlph.database.PHLTAVGDAO;
+import com.qlph.model.PhongHoc;
+import com.qlph.ui.PHLTAVGOutput;
+import com.qlph.utils.PHLTAVGCalculator;
+
+public class PHLTAVGControl {
+
+	// Ô 2 - Fields
+	private PHLTAVGDAO phltavgdao;
+	private PHLTAVGCalculator phltavgCalculator;
+	private PHLTAVGOutput phltavgOutput;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHLTAVGControl() {
+		// TODO Auto-generated constructor stub
+	}
+
+	// Parameterized Constructor
+	public PHLTAVGControl(PHLTAVGDAO phltavgdao, PHLTAVGCalculator phltavgCalculator, PHLTAVGOutput phltavgOutput) {
+		super();
+		this.phltavgdao = phltavgdao;
+		this.phltavgCalculator = phltavgCalculator;
+		this.phltavgOutput = phltavgOutput;
+	}
+	
+	public void average() {
+		ArrayList<PhongHoc> dSPH;
+		double DienTichTrungBinh;
+		
+		// Phối hợp với các đối tượng
+		// 1. Gửi thông điệp đến object PHLTAVGDAO
+		// Lấy danh sách phòng học từ CSDL
+		dSPH = phltavgdao.getDSPH();
+		
+		// 2. Gửi thông điệp đến object PHLTAVGCalculator
+		// Tính diện tích trung bình phòng học Lý thuyết
+		DienTichTrungBinh = phltavgCalculator.calculatorAVG(dSPH);
+		
+		// 3. Gửi thông điệp đến object PHLTAVGOutput
+		// Hiển thị kết quả
+		phltavgOutput.printAVG(DienTichTrungBinh);
+	}
+
+	
+}
+
+package com.qlph.control;
+
+import java.util.ArrayList;
+
+import com.qlph.database.PHPrintDAO;
+import com.qlph.model.PhongHoc;
+import com.qlph.ui.PHPrintOutput;
+
+public class PHPrintControl {
+	
+	// Ô 2 - Fields
+	private PHPrintDAO phPrintDAO;
+	private PHPrintOutput phPrintOutput;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHPrintControl() {
+		// TODO Auto-generated constructor stub
+	}
+
+	// Parameterized Constructor
+	public PHPrintControl(PHPrintDAO phPrintDAO, PHPrintOutput phPrintOutput) {
+		super();
+		this.phPrintDAO = phPrintDAO;
+		this.phPrintOutput = phPrintOutput;
+	}
+	
+	public void print() {
+		ArrayList<PhongHoc> dsPH;
+		
+		// Phối hợp với các đối tượng
+		// 1. Gửi thông điệp đến object PHPrintDAO
+		// Lấy danh sách phòng học từ CSDL
+		dsPH = phPrintDAO.getDSPH();
+		
+		// 2. Gửi thông điệp đến object PHPrintOutput
+		// Hiển thị danh sách phòng học
+		phPrintOutput.output(dsPH); 
+	}
+	
+	
+}
+package com.qlph.control;
+
+import com.qlph.database.PHSearchDAO;
+import com.qlph.model.PhongHoc;
+import com.qlph.ui.PHSearchInput;
+import com.qlph.ui.PHSearchOutput;
+
+public class PHSearchControl {
+	
+	// Ô 2 - Fields
+	PHSearchDAO phSearchDAO;
+	PHSearchInput phSearchInput;
+	PHSearchOutput phSearchOutput;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHSearchControl() {
+		// TODO Auto-generated constructor stub
+	}
+
+	// Parameterized Constructor
+	public PHSearchControl(PHSearchDAO phSearchDAO, PHSearchInput phSearchInput, PHSearchOutput phSearchOutput) {
+		super();
+		this.phSearchDAO = phSearchDAO;
+		this.phSearchInput = phSearchInput;
+		this.phSearchOutput = phSearchOutput;
+	}
+	
+	public void search() {
+		String maPhong;
+		String loaiPhong;
+		PhongHoc ph;
+		
+		// Phối hợp với các đối tượng
+		// 1. Gửi thông điệp đến object PHSearchInput
+		// Người dùng nhập thông tin phòng cần tìm
+		maPhong = phSearchInput.inputMaPhong();
+		loaiPhong = phSearchInput.inputLoaiPhong();
+		
+		// 2. Gửi thông điệp đến object PHSearchDAO
+		// Tìm kiếm phòng học trong CSDL trùng khớp với thông tin người dùng nhập
+		ph = phSearchDAO.search(maPhong, loaiPhong);
+		
+		// 3. Gửi thông điệp đến object PHSearchOutput
+		// Hiển thị thông tin phòng
+		phSearchOutput.printSearch(ph);
+	}
+}
+
+package com.qlph.control;
+
+import com.qlph.database.PHUpdateDAO;
+import com.qlph.model.PhongHoc;
+import com.qlph.ui.PHUpdateInput;
+import com.qlph.ui.PHUpdateOutput;
+
+public class PHUpdateControl {
+
+    // Ô 2 - Fields
+    private PHUpdateDAO phUpdateDAO;
+    private PHUpdateInput phUpdateInput;
+    private PHUpdateOutput phUpdateOutput;
+    
+    // Ô 3 - Methods
+    // Default Constructor
+    public PHUpdateControl() {
+        // TODO Auto-generated constructor stub
+    }
+
+    // Parameter Constructor
+    public PHUpdateControl(PHUpdateDAO phUpdateDAO, PHUpdateInput phUpdateInput, PHUpdateOutput phUpdateOutput) {
+        super();
+        this.phUpdateDAO = phUpdateDAO;
+        this.phUpdateInput = phUpdateInput;
+        this.phUpdateOutput = phUpdateOutput;
+    }
+    
+    public void update() {
+        String maPhong;
+        String loaiPhong;
+        PhongHoc ph;
+        PhongHoc newPH;
+        PhongHoc updatedPH;
+        
+        // 1. Gửi thông điệp đến object PHUpdateInput
+        // Người dùng nhập thông tin phòng cần cập nhật
+        maPhong = phUpdateInput.inputMaPhong();
+        loaiPhong = phUpdateInput.inputLoaiPhong();
+        
+        // 2. Gửi thông điệp đến object PHUpdateDAO
+        // Kiểm tra thông tin phòng học và cập nhật phòng
+        // 3. Gửi thông điệp đến object PHUpdateOutput
+        // Hiển thị thông báo cho người dùng
+        
+        ph = phUpdateDAO.search(maPhong, loaiPhong);
+        // Kiểm tra phòng học trong CSDL
+        if (ph == null) {
+        	// Phòng không tồn tại
+            phUpdateOutput.showMessage(null);
+        } else {
+        	// Người dùng nhập dữ liệu phòng cần cập nhật
+        	newPH = phUpdateInput.inputPH(maPhong, loaiPhong);
+            // Cập nhật phòng học trong CSDL
+            updatedPH = phUpdateDAO.update(newPH);
+            // Hiển thị thông báo cho người dùng
+            phUpdateOutput.showMessage(updatedPH);
+        }
+    }
+}
+package com.qlph.database;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+import com.qlph.model.PHLyThuyet;
+import com.qlph.model.PHMayTinh;
+import com.qlph.model.PHThiNghiem;
+import com.qlph.model.PhongHoc;
+
+// Đây là lớp giả lập cơ sở dữ liệu
+public class MemoryPHDB {
+
+	// Ô 2 - Fields
+	private static ArrayList<PhongHoc> phDB;
+	
+	// Static block code
+	static {
+		
+		phDB = new ArrayList<PhongHoc>();
+		
+		// 1. Phòng lý thuyết - Đạt chuẩn
+        phDB.add(new PHLyThuyet("LT001", "A1", 50.0, 6, new Date(), true)); 
+        // dienTich/10 = 5 <= 6, có máy chiếu -> Đạt
+        
+        // 2. Phòng lý thuyết - Không đạt (thiếu máy chiếu)
+        phDB.add(new PHLyThuyet("LT002", "A2", 40.0, 5, new Date(), false)); 
+        // dienTich/10 = 4 <= 5, nhưng không có máy chiếu -> Không đạt
+        
+        // 3. Phòng máy tính - Đạt chuẩn
+        phDB.add(new PHMayTinh("MT001", "B1", 60.0, 8, new Date(), 40)); 
+        // dienTich/10 = 6 <= 8, dienTich/1.5 = 40 <= 40 -> Đạt
+        
+        // 4. Phòng máy tính - Không đạt (thiếu máy tính)
+        phDB.add(new PHMayTinh("MT002", "B2", 60.0, 8, new Date(), 30)); 
+        // dienTich/10 = 6 <= 8, nhưng dienTich/1.5 = 40 > 30 -> Không đạt
+        
+        // 5. Phòng thí nghiệm - Đạt chuẩn
+        phDB.add(new PHThiNghiem("TN001", "C1", 70.0, 10, new Date(), "Hóa học", 30, true)); 
+        // dienTich/10 = 7 <= 10, có bồn rửa -> Đạt
+        
+        // 6. Phòng thí nghiệm - Không đạt (thiếu bồn rửa)
+        phDB.add(new PHThiNghiem("TN002", "C2", 50.0, 6, new Date(), "Vật lý", 20, false)); 
+        // dienTich/10 = 5 <= 6, nhưng không có bồn rửa -> Không đạt
+        
+        // 7. Phòng lý thuyết - Không đạt (thiếu bóng đèn)
+        phDB.add(new PHLyThuyet("LT003", "A3", 50.0, 4, new Date(), true)); 
+        // dienTich/10 = 5 > 4, dù có máy chiếu -> Không đạt
+        
+        // 8. Phòng máy tính - Đạt chuẩn
+        phDB.add(new PHMayTinh("MT003", "B3", 45.0, 5, new Date(), 30)); 
+        // dienTich/10 = 4.5 <= 5, dienTich/1.5 = 30 <= 30 -> Đạt
+        
+        // 9. Phòng thí nghiệm - Đạt chuẩn
+        phDB.add(new PHThiNghiem("TN003", "C3", 80.0, 10, new Date(), "Sinh học", 40, true)); 
+        // dienTich/10 = 8 <= 10, có bồn rửa -> Đạt
+        
+        // 10. Phòng lý thuyết - Không đạt (thiếu cả bóng đèn và máy chiếu)
+        phDB.add(new PHLyThuyet("LT004", "A4", 60.0, 5, new Date(), false)); 
+        // dienTich/10 = 6 > 5, không có máy chiếu -> Không đạt
+
+	}
+	
+	// Ô 3 - Methods
+	public static void insert(PhongHoc ph) {
+		phDB.add(ph);
+	}
+	
+	public static ArrayList<PhongHoc> getDSPH() {
+		return phDB;
+	}
+	
+	public static boolean delete(String maPhong, String loaiPhong) {
+	    for (int i = phDB.size() - 1; i >= 0; i--) {
+	        PhongHoc ph = phDB.get(i);
+	        if (ph.getMaPhong().equalsIgnoreCase(maPhong) && ph.getLoaiPhong().equalsIgnoreCase(loaiPhong)) {
+	            phDB.remove(i);
+	            return true; // Xóa thành công
+	        }
+	    }
+	    return false; // Không tìm thấy
+	}
+	
+	public static PhongHoc search(String maPhong, String loaiPhong) {
+        for (PhongHoc phong : phDB) {
+            if (phong.getMaPhong().equalsIgnoreCase(maPhong) &&
+                phong.getLoaiPhong().equalsIgnoreCase(loaiPhong)) {
+                return phong;
+            }
+        }
+        return null;
+    }
+	
+	public static PhongHoc update(PhongHoc newPH) {
+	    for (PhongHoc oldPH : phDB) {
+	        if (oldPH == null) continue;
+
+	        // So sánh đúng phòng cần cập nhật
+	        if (oldPH.getMaPhong().equalsIgnoreCase(newPH.getMaPhong()) &&
+	            oldPH.getLoaiPhong().equalsIgnoreCase(newPH.getLoaiPhong())) {
+
+	            // Cập nhật thuộc tính chung
+	        	oldPH.setMaPhong(newPH.getMaPhong());
+	            oldPH.setDayNha(newPH.getDayNha());
+	            oldPH.setDienTich(newPH.getDienTich());
+	            oldPH.setSoBongDen(newPH.getSoBongDen());
+	            oldPH.setNgayHoatDong(newPH.getNgayHoatDong());
+
+	            // Cập nhật thuộc tính riêng theo loại phòng
+	            if (oldPH.getLoaiPhong().equalsIgnoreCase("LT")) {
+	                PHLyThuyet oldLT = (PHLyThuyet) oldPH;
+	                PHLyThuyet newLT = (PHLyThuyet) newPH;
+	                oldLT.setMayChieu(newLT.isMayChieu());
+
+	            } else if (oldPH.getLoaiPhong().equalsIgnoreCase("MT")) {
+	                PHMayTinh oldMT = (PHMayTinh) oldPH;
+	                PHMayTinh newMT = (PHMayTinh) newPH;
+	                oldMT.setSoLuongMayTinh(newMT.getSoLuongMayTinh());
+
+	            } else if (oldPH.getLoaiPhong().equalsIgnoreCase("TN")) {
+	                PHThiNghiem oldTN = (PHThiNghiem) oldPH;
+	                PHThiNghiem newTN = (PHThiNghiem) newPH;
+	                oldTN.setChuyenNganh(newTN.getChuyenNganh());
+	                oldTN.setSucChua(newTN.getSucChua());
+	                oldTN.setBonRua(newTN.isBonRua());
+	            }
+
+	            return newPH; // Trả về nếu cập nhật thành công
+	        }
+	    }
+
+	    return null; // Không tìm thấy phòng cần cập nhật
+	}
+
+	
+}
+package com.qlph.database;
+
+import com.qlph.model.PhongHoc;
+
+public class PHAddDAO {
+	
+	// Ô 2 - Fields
+	
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	/*Không cần tạo vì java tự động tạo*/
+	
+	public void insert(PhongHoc ph) {
+		MemoryPHDB.insert(ph);
+	}
+	
+	
+}
+package com.qlph.database;
+
+import java.util.ArrayList;
+
+import com.qlph.model.PhongHoc;
+
+public class PHCountDAO {
+	
+	// Ô 2 - Fields
+	
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	/*Không cần tạo vì java tự động tạo*/
+	
+	public ArrayList<PhongHoc> getDSPH() {
+		return MemoryPHDB.getDSPH();
+	}
+}
+package com.qlph.database;
+
+import com.qlph.model.PhongHoc;
+
+public class PHDeleteDAO {
+	
+	// Ô 2 - Fields
+	
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	/*Không cần tạo vì java tự động tạo*/
+	
+	public boolean delete(String maPhong, String loaiPhong) {
+		return MemoryPHDB.delete(maPhong, loaiPhong);
+	}
+	
+	public PhongHoc search(String maPhong, String loaiPhong) {
+        return MemoryPHDB.search(maPhong, loaiPhong);
+    }
+	
+	
+	
+}
+package com.qlph.database;
+
+import java.util.ArrayList;
+
+import com.qlph.model.PhongHoc;
+
+public class PHFilterDAO {
+	
+	// Ô 2 - Fields
+	
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	/*Không cần tạo vì java tự động tạo*/
+	
+	public ArrayList<PhongHoc> getDSPH() {
+		return MemoryPHDB.getDSPH();
+	}
+	
+	
+}
+package com.qlph.database;
+
+import java.util.ArrayList;
+
+import com.qlph.model.PhongHoc;
+
+public class PHLTAVGDAO {
+	
+	// Ô 2 - Fields
+	
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	/*Không cần tạo vì java tự động tạo*/
+	
+	public ArrayList<PhongHoc> getDSPH() {
+		return MemoryPHDB.getDSPH();
+	}
+	
+	
+}
+package com.qlph.database;
+
+import java.util.ArrayList;
+
+import com.qlph.model.PhongHoc;
+
+public class PHPrintDAO {
+	
+	// Ô 2 - Fields
+	
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	/*Không cần tạo vì java tự động tạo*/
+	
+	public ArrayList<PhongHoc> getDSPH() {
+		return MemoryPHDB.getDSPH();
+	}
+	
+	
+}
+package com.qlph.database;
+
+import com.qlph.model.PhongHoc;
+
+public class PHSearchDAO {
+	
+	// Ô 2 - Fields
+	
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	/*Không cần tạo vì java tự động tạo*/
+	
+	public PhongHoc search(String maPhong, String loaiPhong) {
+        return MemoryPHDB.search(maPhong, loaiPhong);
+    }
+}
+package com.qlph.database;
+
+import com.qlph.model.PhongHoc;
+
+public class PHUpdateDAO {
+	
+	// Ô 2 - Fields
+	
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	/*Không cần tạo vì java tự động tạo*/
+	
+	public PhongHoc search(String maPhong, String loaiPhong) {
+        return MemoryPHDB.search(maPhong, loaiPhong);
+    }
+	
+	public PhongHoc update(PhongHoc newPH) {
+	    return MemoryPHDB.update(newPH);
+	}
+	
+}
+package com.qlph.main;
+
+import java.io.PrintWriter;
+import java.util.Scanner;
+
+import com.qlph.control.PHLTAVGControl;
+import com.qlph.control.PHAddControl;
+import com.qlph.control.PHCountControl;
+import com.qlph.control.PHPrintControl;
+import com.qlph.control.PHSearchControl;
+import com.qlph.control.PHUpdateControl;
+import com.qlph.control.PHDeleteControl;
+import com.qlph.control.PHFilterControl;
+import com.qlph.database.PHLTAVGDAO;
+import com.qlph.database.PHAddDAO;
+import com.qlph.database.PHCountDAO;
+import com.qlph.database.PHPrintDAO;
+import com.qlph.database.PHSearchDAO;
+import com.qlph.database.PHUpdateDAO;
+import com.qlph.database.PHDeleteDAO;
+import com.qlph.database.PHFilterDAO;
+import com.qlph.ui.PHLTAVGOutput;
+import com.qlph.ui.PHAddInput;
+import com.qlph.ui.PHAddOutput;
+import com.qlph.ui.PHCountOutput;
+import com.qlph.ui.PHMenu;
+import com.qlph.ui.PHPrintOutput;
+import com.qlph.ui.PHSearchInput;
+import com.qlph.ui.PHSearchOutput;
+import com.qlph.ui.PHUpdateInput;
+import com.qlph.ui.PHUpdateOutput;
+import com.qlph.ui.PHDeleteInput;
+import com.qlph.ui.PHDeleteOutput;
+import com.qlph.ui.PHFilterOutput;
+import com.qlph.utils.PHCountCalculator;
+import com.qlph.utils.PHFilter;
+import com.qlph.utils.PHLTAVGCalculator;
+
+public class AppQLPH {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		// Bước 1: Khai báo biến tham chiếu đối tượng
+		Scanner keyboard;
+		PrintWriter out;
+		String prompt = ">";
+		
+		// Khai báo biến tham chiếu chức năng thêm
+		PHAddDAO phAddDAO;
+		PHAddInput phAddInput;
+		PHAddOutput phAddOutput;
+		PHAddControl phAddControl;
+		
+		// Khai báo biến tham chiếu chức năng in
+		PHPrintControl phPrintControl;
+		PHPrintOutput phPrintOutput;
+		PHPrintDAO phPrintDAO;
+		
+		// Khai báo biến tham chiếu chức năng tính trung bình diện tích phòng lý thuyết
+		PHLTAVGDAO phltavgdao;
+		PHLTAVGCalculator phltavgCalculator;
+		PHLTAVGOutput phltavgOutput;
+		PHLTAVGControl phltavgControl;
+		
+		
+		// Khai báo biến tham chiếu chức năng xóa
+		PHDeleteDAO phDeleteDAO;
+		PHDeleteInput phDeleteInput;
+		PHDeleteOutput phDeleteOutput;
+		PHDeleteControl phDeleteControl;
+		
+		// Khai báo biến tham chiếu chức năng cập nhật
+		PHUpdateDAO phUpdateDAO;
+		PHUpdateInput phUpdateInput;
+		PHUpdateOutput phUpdateOutput;
+		PHUpdateControl phUpdateControl;
+		
+		// Khai báo biến tham chiếu chức năng tìm kiếm
+		PHSearchDAO phSearchDAO;
+		PHSearchInput phSearchInput;
+		PHSearchOutput phSearchOutput;
+		PHSearchControl phSearchControl;
+		
+		// Khai báo biến tham chiếu chức năng tổng số lượng phòng học từng loại
+		PHCountDAO phCountDAO;
+		PHCountCalculator phCountCalculator;
+		PHCountOutput phCountOutput;
+		PHCountControl phCountControl;
+		
+		// Khai báo biến tham chiếu chức năng xuất ra phòng không đạt chuẩn
+		PHFilterDAO phFilterDAO;
+		PHFilter phFilter;
+		PHFilterOutput phFilterOutput;
+		PHFilterControl phFilterControl;
+		
+		// Khai báo biến tham chiếu menu
+		PHMenu menu;
+		
+		// Bước 2: Khởi tạo đối tượng trong vùng nhớ Heap
+		// Bước 3: Trỏ biến tham chiếu đến với đối tượng nằm trong vùng nhớ Heap
+		keyboard /* Bước 3 */ = /* Bước 2 */ new Scanner(System.in);
+		out = new PrintWriter(System.out);
+		
+		// Chức năng thêm
+		phAddDAO /* Bước 3 */ = /* Bước 2 */ new PHAddDAO();
+		phAddInput /* Bước 3 */ = /* Bước 2 */ new PHAddInput(keyboard, out);
+		phAddOutput /* Bước 3 */ = /* Bước 2 */ new PHAddOutput(out);
+		phAddControl /* Bước 3 */ = /* Bước 2 */ new PHAddControl(phAddDAO, phAddInput, phAddOutput);
+		
+		// Chức năng in
+		phPrintDAO /* Bước 3 */ = /* Bước 2 */ new PHPrintDAO();
+		phPrintOutput /* Bước 3 */ = /* Bước 2 */ new PHPrintOutput(out);
+		phPrintControl /* Bước 3 */ = /* Bước 2 */ new PHPrintControl(phPrintDAO, phPrintOutput);
+	
+		// Chức năng tính trung bình diện tích phòng lý thuyết
+		phltavgdao /* Bước 3 */ = /* Bước 2 */ new PHLTAVGDAO();
+		phltavgCalculator /* Bước 3 */ = /* Bước 2 */ new PHLTAVGCalculator();
+		phltavgOutput /* Bước 3 */ = /* Bước 2 */ new PHLTAVGOutput(out);
+		phltavgControl /* Bước 3 */ = /* Bước 2 */ new PHLTAVGControl(phltavgdao, phltavgCalculator, phltavgOutput);
+		
+		// Chức năng xóa
+		phDeleteDAO /* Bước 3 */ = /* Bước 2 */ new PHDeleteDAO();
+		phDeleteInput /* Bước 3 */ = /* Bước 2 */ new PHDeleteInput(keyboard, out);
+		phDeleteOutput /* Bước 3 */ = /* Bước 2 */ new PHDeleteOutput(out);
+		phDeleteControl /* Bước 3 */ = /* Bước 2 */ new PHDeleteControl(phDeleteDAO, phDeleteInput, phDeleteOutput);
+		
+		// Chức năng cập nhật
+		phUpdateDAO /* Bước 3 */ = /* Bước 2 */ new PHUpdateDAO();
+		phUpdateInput /* Bước 3 */ = /* Bước 2 */ new PHUpdateInput(keyboard, out);
+		phUpdateOutput /* Bước 3 */ = /* Bước 2 */ new PHUpdateOutput(out);
+		phUpdateControl /* Bước 3 */ = /* Bước 2 */ new PHUpdateControl(phUpdateDAO, phUpdateInput, phUpdateOutput);
+		
+		// Chức năng tìm kiếm
+		phSearchDAO /* Bước 3 */ = /* Bước 2 */ new PHSearchDAO();
+		phSearchInput /* Bước 3 */ = /* Bước 2 */ new PHSearchInput(keyboard, out);
+		phSearchOutput /* Bước 3 */ = /* Bước 2 */ new PHSearchOutput(out);
+		phSearchControl /* Bước 3 */ = /* Bước 2 */ new PHSearchControl(phSearchDAO, phSearchInput, phSearchOutput);
+		
+		// Chức năng tổng số lượng phòng học từng loại
+		phCountDAO /* Bước 3 */ = /* Bước 2 */ new PHCountDAO();
+		phCountCalculator /* Bước 3 */ = /* Bước 2 */ new PHCountCalculator();
+		phCountOutput /* Bước 3 */ = /* Bước 2 */ new PHCountOutput(out);
+		phCountControl /* Bước 3 */ = /* Bước 2 */ new PHCountControl(phCountDAO, phCountCalculator, phCountOutput);
+		
+		// Chức năng xuất ra phòng không đạt chuẩn
+		phFilterDAO /* Bước 3 */ = /* Bước 2 */ new PHFilterDAO();
+		phFilter /* Bước 3 */ = /* Bước 2 */ new PHFilter();
+		phFilterOutput /* Bước 3 */ = /* Bước 2 */ new PHFilterOutput(out);
+		phFilterControl /* Bước 3 */ = /* Bước 2 */ new PHFilterControl(phFilterDAO, phFilter, phFilterOutput);
+		
+		// Hiển thị menu
+		menu /* Bước 3 */ = /* Bước 2 */ new PHMenu(keyboard, out, prompt);
+		
+		
+		// 
+		// Gửi thông điệp đến object PHAddControl
+		menu.setPHAddControl(phAddControl);
+		
+		// Gửi thông điệp đến object PHPrintControl
+		menu.setPHPrintcontrol(phPrintControl);
+		
+		//  Gửi thông điệp đến object PHLTAVGControl
+		menu.setPHLTAVGControl(phltavgControl);
+		
+		// Gửi thông điệp đến object PHRemoveControl
+		menu.setPHDeleteControl(phDeleteControl);
+		
+		// Gửi thông điệp đến object PHUpdateControl
+		menu.setPHUpdateControl(phUpdateControl);
+		
+		// Gửi thông điệp đến object PHSearchControl
+		menu.setPHSearchControl(phSearchControl);
+		
+		// Gửi thông điệp đến object PHCountControl
+		menu.setPHCountControl(phCountControl);
+		
+		// Gửi thông điệp đến object PHFilterControl
+		menu.setPHFilterControl(phFilterControl);
+		
+		// Hiển thị tiêu đề
+		out.println("===============================================");
+		out.flush();
+		out.println("|        CHƯƠNG TRÌNH QUẢN LÍ PHÒNG HỌC       |");
+		out.flush();
+		out.println("===============================================");
+		out.flush();
+		
+		// Gửi thông điệp đến object PHMenu
+		menu.controlLoop();
+	}
+
+	
+}
+package com.qlph.model;
+
+import java.util.Date;
+
+// Subclass
+public class PHLyThuyet extends PhongHoc {
+	
+	// Ô 2 - Fields
+	private boolean isMayChieu;
+	
+	// Ô 3 - Methods
+	// Default Constuctor
+	public PHLyThuyet() {
+		// TODO Auto-generated constructor stub
+	}
+
+	// Parameterized Constructor
+	public PHLyThuyet(String maPhong, String dayNha, double dienTich, int soBongDen, Date ngayHoatDong, boolean isMayChieu) {
+		super(maPhong, dayNha, dienTich, soBongDen, ngayHoatDong);
+		this.isMayChieu = isMayChieu;
+	}
+	
+	@Override
+	public boolean isDatChuan() {
+		// TODO Auto-generated method stub
+		return (getDienTich() / 10) <= getSoBongDen() && isMayChieu == true;
+	}
+
+	// Getter and Setter
+	public boolean isMayChieu() {
+		return isMayChieu;
+	}
+
+	public void setMayChieu(boolean isMayChieu) {
+		this.isMayChieu = isMayChieu;
+	}
+	
+	@Override
+	public String getLoaiPhong() {
+		return "LT";
+	}
+
+	// toString()
+	@Override
+	public String toString() {
+		return super.toString() + "\nMáy Chiếu: " + isMayChieu +
+				"\nLoại phòng: Lý thuyết";
+	}
+	
+	
+}
+package com.qlph.model;
+
+import java.util.Date;
+
+// Subclass
+public class PHMayTinh extends PhongHoc {
+
+	// Ô 2 - Fields
+	private int soLuongMayTinh;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHMayTinh() {
+		// TODO Auto-generated constructor stub
+	}
+
+	// Parameterized Constructor
+	public PHMayTinh(String maPhong, String dayNha, double dienTich, int soBongDen, Date ngayHoatDong, int soLuongMayTinh) {
+		super(maPhong, dayNha, dienTich, soBongDen, ngayHoatDong);
+		this.soLuongMayTinh = soLuongMayTinh;
+	}
+	
+	@Override
+	public boolean isDatChuan() {
+		// TODO Auto-generated method stub
+		return (getDienTich() / 10) <= getSoBongDen() && (getDienTich() / 1.5) <= soLuongMayTinh;
+	}
+
+	// Getter and Setter
+	public int getSoLuongMayTinh() {
+		return soLuongMayTinh;
+	}
+
+	public void setSoLuongMayTinh(int soLuongMayTinh) {
+		this.soLuongMayTinh = soLuongMayTinh;
+	}
+	
+	@Override
+	public String getLoaiPhong() {
+		return "MT";
+	}
+
+	// toString()
+	@Override
+	public String toString() {
+		return super.toString() + "\nSố lượng máy tính: " + soLuongMayTinh +
+				"\nLoại phòng: Máy tính";
+	}
+	
+	
+}
+package com.qlph.model;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+// Superclass
+public abstract class PhongHoc {
+	
+	// Ô 2 - Fields
+	private String maPhong;
+	private String dayNha;
+	private double dienTich;
+	private int soBongDen;
+	private Date ngayHoatDong;
+	
+	// Ô 3 - Methods
+	// Default Constuctor
+	protected PhongHoc() {
+		// TODO Auto-generated constructor stub
+	}
+
+	// Parameterized Constructor
+	protected PhongHoc(String maPhong, String dayNha, double dienTich, int soBongDen, Date ngayHoatDong) {
+		super();
+		this.maPhong = maPhong;
+		this.dayNha = dayNha;
+		this.dienTich = dienTich;
+		this.soBongDen = soBongDen;
+		this.ngayHoatDong = ngayHoatDong;
+	}
+	
+	// Kiểm tra phòng học đạt chuẩn
+	public abstract boolean isDatChuan();
+	
+	// Getters and Setters
+	public String getMaPhong() {
+		return maPhong;
+	}
+
+	public void setMaPhong(String maPhong) {
+		this.maPhong = maPhong;
+	}
+
+	public String getDayNha() {
+		return dayNha;
+	}
+
+	public void setDayNha(String dayNha) {
+		this.dayNha = dayNha;
+	}
+
+	public double getDienTich() {
+		return dienTich;
+	}
+
+	public void setDienTich(double dienTich) {
+		this.dienTich = dienTich;
+	}
+
+	public int getSoBongDen() {
+		return soBongDen;
+	}
+
+	public void setSoBongDen(int soBongDen) {
+		this.soBongDen = soBongDen;
+	}
+
+	public Date getNgayHoatDong() {
+		return ngayHoatDong;
+	}
+
+	public void setNgayHoatDong(Date ngayHoatDong) {
+		this.ngayHoatDong = ngayHoatDong;
+	}
+	
+	public abstract String getLoaiPhong();
+
+	// toString()
+	@Override
+	public String toString() {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		String formattedDate = formatter.format(ngayHoatDong);
+		return "Mã phòng: " + maPhong +
+				"\nDãy nhà: " + dayNha +
+				"\nDiện tích: " + dienTich +
+				"\nSố bóng đèn: "+ soBongDen +
+				"\nNgày hoạt động: " + formattedDate;
+	}
+	
+	
+}
+package com.qlph.model;
+
+import java.util.Date;
+
+// Subclass
+public class PHThiNghiem extends PhongHoc {
+
+	// Ô 2 - Fields
+	private String chuyenNganh;
+	private int sucChua;
+	private boolean isBonRua;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHThiNghiem() {
+		// TODO Auto-generated constructor stub
+	}
+
+	// Parameterized Constructor
+	public PHThiNghiem(String maPhong, String dayNha, double dienTich, int soBongDen, Date ngayHoatDong, String chuyenNganh, int sucChua, boolean isBonRua) {
+		super(maPhong, dayNha, dienTich, soBongDen, ngayHoatDong);
+		this.chuyenNganh = chuyenNganh;
+		this.sucChua = sucChua;
+		this.isBonRua = isBonRua;
+	}
+	
+	@Override
+	public boolean isDatChuan() {
+		// TODO Auto-generated method stub
+		return (getDienTich() / 10) <= getSoBongDen() && isBonRua == true;
+	}
+	
+	// Getters and Setters
+	public String getChuyenNganh() {
+		return chuyenNganh;
+	}
+
+	public void setChuyenNganh(String chuyenNganh) {
+		this.chuyenNganh = chuyenNganh;
+	}
+
+	public int getSucChua() {
+		return sucChua;
+	}
+
+	public void setSucChua(int sucChua) {
+		this.sucChua = sucChua;
+	}
+
+	public boolean isBonRua() {
+		return isBonRua;
+	}
+
+	public void setBonRua(boolean isBonRua) {
+		this.isBonRua = isBonRua;
+	}
+	
+	@Override
+	public String getLoaiPhong() {
+		return "TN";
+	}
+
+	// toString()
+	@Override
+	public String toString() {
+		return super.toString() + "\nChuyên ngành: " + chuyenNganh +
+				"\nSức chứa: " + sucChua +
+				"\nBồn rửa: " + isBonRua +
+				"\nLoại phòng: Thí nghiệm";
+	}
+	
+	
+}
+package com.qlph.ui;
+
+import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
+
+import com.qlph.model.PHLyThuyet;
+import com.qlph.model.PHMayTinh;
+import com.qlph.model.PHThiNghiem;
+import com.qlph.model.PhongHoc;
+
+public class PHAddInput {
+	
+	// Ô 2 - Fields
+	private Scanner keyboard;
+	private PrintWriter out;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHAddInput() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	// Parameterized Constructor
+	public PHAddInput(Scanner keyboard, PrintWriter out) {
+		super();
+		this.keyboard = keyboard;
+		this.out = out;
+	}
+	
+	public PhongHoc inputPH() {
+		String maPhong;
+		String dayNha;
+		double dienTich;
+		int soBongDen;
+		String ngayHoatDong;
+		
+		SimpleDateFormat formatter;
+		Date ngayHoatDongJava = null;
+		
+		String loaiPhong;
+		
+		PhongHoc ph = null;
+		
+		out.print("Mã phòng: ");
+		out.flush();
+		maPhong = keyboard.nextLine();
+	
+		out.print("Dãy nhà: ");
+		out.flush();
+		dayNha = keyboard.nextLine();
+		
+		out.print("Diện tích: ");
+		out.flush();
+		dienTich = keyboard.nextDouble();
+		
+		out.print("Số bóng đèn: ");
+		out.flush();
+		soBongDen = keyboard.nextInt();
+		keyboard.nextLine();
+		
+		out.print("Ngày hoạt động (dd/MM/yyyy): ");
+		out.flush();
+		ngayHoatDong = keyboard.nextLine();
+		formatter = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			ngayHoatDongJava = formatter.parse(ngayHoatDong);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		out.print("Loại phòng (LT - MT - TN): ");
+		out.flush();
+		loaiPhong = keyboard.nextLine();
+		if ("LT".equalsIgnoreCase(loaiPhong)) {
+			ph = inputPHLT(maPhong, dayNha, dienTich, soBongDen, ngayHoatDongJava);
+		}
+		if ("MT".equalsIgnoreCase(loaiPhong)) {
+			ph = inputPHMT(maPhong, dayNha, dienTich, soBongDen, ngayHoatDongJava);
+		}
+		if ("TN".equalsIgnoreCase(loaiPhong)) {
+			ph = inputPHTN(maPhong, dayNha, dienTich, soBongDen, ngayHoatDongJava);
+		}	
+		return ph;
+	}
+	
+	private PhongHoc inputPHLT(String maPhong, String dayNha, double dienTich, int soBongDen, Date ngayHoatDongJava) {
+		boolean hasMayChieu;
+		PHLyThuyet phLT;
+		
+		out.print("Có máy chiếu (true/false): ");
+		out.flush();
+		hasMayChieu = keyboard.nextBoolean();
+		
+		phLT = new PHLyThuyet(maPhong, dayNha, dienTich, soBongDen, ngayHoatDongJava, hasMayChieu);
+		return phLT;
+	}
+	
+	private PhongHoc inputPHMT(String maPhong, String dayNha, double dienTich, int soBongDen, Date ngayHoatDongJava) {
+		int soLuongMayTinh;
+		PHMayTinh phMT;
+		
+		out.print("Số lượng máy tính: ");
+		out.flush();
+		soLuongMayTinh = keyboard.nextInt();
+		
+		phMT = new PHMayTinh(maPhong, dayNha, dienTich, soBongDen, ngayHoatDongJava, soLuongMayTinh);
+		return phMT;
+	}
+	
+	private PhongHoc inputPHTN(String maPhong, String dayNha, double dienTich, int soBongDen, Date ngayHoatDongJava) {
+		String chuyenNganh;
+		int sucChua;
+		boolean hasBonRua;
+		PHThiNghiem phTN;
+		
+		out.print("Chuyên ngành: ");
+		out.flush();
+		chuyenNganh = keyboard.nextLine();
+		
+		out.print("Sức chứa: ");
+		out.flush();
+		sucChua = keyboard.nextInt();
+		
+		out.print("Có bồn rửa (true/false): ");
+		out.flush();
+		hasBonRua = keyboard.nextBoolean();
+		
+		phTN = new PHThiNghiem(maPhong, dayNha, dienTich, soBongDen, ngayHoatDongJava, chuyenNganh, sucChua, hasBonRua);
+		return phTN;
+	}
+	
+	
+}
+package com.qlph.ui;
+
+import java.io.PrintWriter;
+
+import com.qlph.model.PhongHoc;
+
+public class PHAddOutput {
+	
+	// Ô 2 - Fields
+	PrintWriter out;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHAddOutput() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	// Parameterized Constructor
+	public PHAddOutput(PrintWriter out) {
+		super();
+		this.out = out;
+	}
+	
+	public void showMessage(PhongHoc ph) {
+		if (ph == null) {
+			out.println("-------------------------");
+			out.flush();
+			out.println("Thêm phòng học thất bại!");
+			out.flush();
+			out.println("-------------------------");
+			out.flush();
+		} else {
+			out.println("-----------------------------");
+			out.flush();
+			out.println("Thêm phòng học thành công!");
+			out.flush();
+			out.println(ph);
+			out.flush();
+			out.println("-----------------------------");
+			out.flush();
+		}
+	}
+	
+	
+}
+package com.qlph.ui;
+
+import java.io.PrintWriter;
+
+public class PHCountOutput {
+	
+	// Ô 2 - Fields
+	private PrintWriter out;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHCountOutput() {
+		// TODO Auto-generated constructor stub
+	}
+
+	// Parameterized Constructor
+	public PHCountOutput(PrintWriter out) {
+		super();
+		this.out = out;
+	}
+	
+	public void countPrint(int Countphlt,int Countphmt,int Countphtn) {
+		out.println("-------------------------------------------------");
+		out.flush();
+		out.println("[Tổng số lượng phòng học lý thuyết]= " + Countphlt);
+		out.flush();
+		out.println("[Tổng số lượng phòng học máy tính]= " + Countphmt);
+		out.flush();
+		out.println("[Tổng số lượng phòng học thí nghiệm]= " + Countphtn);
+		out.flush();
+		out.println("-------------------------------------------------");
+		out.flush();
+	}
+	
+	
+}
+package com.qlph.ui;
+
+import java.io.PrintWriter;
+import java.util.Scanner;
+
+public class PHDeleteInput {
+	
+	// Ô 2 - Fields
+	Scanner keyboard;
+	PrintWriter out;
+	
+	// Ô 3 - Methods
+	public PHDeleteInput() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public PHDeleteInput(Scanner keyboard, PrintWriter out) {
+		super();
+		this.keyboard = keyboard;
+		this.out = out;
+	}
+	
+	public String inputMaPhong() {
+		String maPhong;
+		
+		out.print("Mã phòng: ");
+		out.flush();
+		maPhong = keyboard.nextLine();
+		
+		return maPhong;
+	}
+
+	public String inputLoaiPhong() {
+    	String loaiPhong;
+        out.print("Loại phòng (LT - MT - TN): ");
+		out.flush();
+		loaiPhong = keyboard.nextLine();
+		if ("LT".equalsIgnoreCase(loaiPhong)) {
+			loaiPhong = "LT";
+		}
+		if ("MT".equalsIgnoreCase(loaiPhong)) {
+			loaiPhong = "MT";
+		}
+		if ("TN".equalsIgnoreCase(loaiPhong)) {
+			loaiPhong = "TN";
+		}
+        return loaiPhong;
+    }
+	
+	
+}
+package com.qlph.ui;
+
+import java.io.PrintWriter;
+
+public class PHDeleteOutput {
+	
+	// Ô 2 - Fields
+	private PrintWriter out;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHDeleteOutput() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public PHDeleteOutput(PrintWriter out) {
+		super();
+		this.out = out;
+	}
+	
+	public void showMessage(boolean isThanhCong) {
+		out.println("-----------------------------");
+		out.flush();
+		if (isThanhCong) {
+			out.println("Xóa phòng học thành công!");
+			out.flush();
+		} else {
+			out.println("Xóa phòng học thất bại!");
+			out.flush();
+		}
+		out.println("-----------------------------");
+		out.flush();
+	}
+	
+	
+}
+package com.qlph.ui;
+
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
+import com.qlph.model.PhongHoc;
+
+public class PHFilterOutput {
+	
+	// Ô 2 - Fields
+	PrintWriter out;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+    public PHFilterOutput(PrintWriter out) {
+        super();
+        this.out = out;
+    }
+    
+	// Parameterized Constructor
+    public void printFilter(ArrayList<PhongHoc> dsPKDC) {
+        if (dsPKDC != null && !dsPKDC.isEmpty()) {
+        	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        	out.println("------------------------------------");
+        	out.flush();
+            out.println("Danh sách các phòng không đạt chuẩn:");
+		    out.println("==================================================================================================");
+		    out.flush();
+		    out.printf("%-15s %-12s %-15s %-15s %-18s %-15s%n", 
+		        "Mã Phòng", "Dãy Nhà", "Diện Tích", "Số Bóng Đèn", "Ngày Hoạt Động", "Loại Phòng");
+		    out.flush();
+		    out.println("==================================================================================================");
+		    out.flush();
+            for (PhongHoc ph : dsPKDC) {
+            	String loaiPhong = ph.getLoaiPhong();
+            	
+		        // Chuyển đổi loại phòng từ mã viết tắt
+		        if (loaiPhong.equals("LT")) {
+		            loaiPhong = "Lý thuyết";
+		        } else if (loaiPhong.equals("MT")) {
+		            loaiPhong = "Máy tính";
+		        } else if (loaiPhong.equals("TN")) {
+		            loaiPhong = "Thí nghiệm";
+		        }
+		        
+		        out.printf("%-15s %-12s %-15.2f %-15d %-18s %-15s%n", 
+		            ph.getMaPhong(), ph.getDayNha(), ph.getDienTich(), ph.getSoBongDen(), 
+		            formatter.format(ph.getNgayHoatDong()), loaiPhong);
+            }
+		    out.println("==================================================================================================");
+		    out.flush();
+        } else {
+           	out.println("-------------------------------");
+        	out.flush();
+            out.println("Tất cả phòng học đều đạt chuẩn.");
+           	out.println("-------------------------------");
+        }
+        out.flush();
+    }
+    
+    public void DSPHIsEmpty() { 
+    	out.println("---------------------");
+	    out.flush();
+		out.println("Vui lòng thêm phòng.");
+	    out.flush();
+		out.println("---------------------");
+	    out.flush();
+    }
+
+    
+}
+package com.qlph.ui;
+
+import java.io.PrintWriter;
+
+public class PHLTAVGOutput {
+	
+	// Ô 2 - Fields
+	private PrintWriter out;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHLTAVGOutput() {
+		
+	}
+	
+	// Parameterized Constructor
+	public PHLTAVGOutput(PrintWriter out) {
+		super();
+		this.out = out;
+	}
+	
+	public void printAVG(double results) {
+		out.println("---------------------------------------------------");
+    	out.flush();
+		out.println("[Diện tích trung bình phòng học lý thuyết] = " + results);
+		out.flush();
+		out.println("---------------------------------------------------");
+    	out.flush();
+	}
+	
+	
+}
+package com.qlph.ui;
+
+import java.io.PrintWriter;
+import java.util.Scanner;
+
+import com.qlph.control.PHLTAVGControl;
+import com.qlph.control.PHAddControl;
+import com.qlph.control.PHCountControl;
+import com.qlph.control.PHPrintControl;
+import com.qlph.control.PHSearchControl;
+import com.qlph.control.PHUpdateControl;
+import com.qlph.control.PHDeleteControl;
+import com.qlph.control.PHFilterControl;
+
+public class PHMenu {
+	
+	// Ô 2 - Fields
+	private Scanner keyboard;
+	private PrintWriter out;
+	private String prompt;
+	private PHAddControl phAddControl;
+	private PHPrintControl phPrintControl;
+	private PHLTAVGControl phltavgControl;
+	private PHDeleteControl phDeleteControl;
+	private PHUpdateControl phUpdateControl;
+	private PHSearchControl phSearchControl;
+	private PHCountControl phCountControl;
+	private PHFilterControl phFilterControl;
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHMenu() {
+		// TODO Auto-generated constructor stub
+	}
+
+	// Parameterized Constructor
+	public PHMenu(Scanner keyboard, PrintWriter out, String prompt) {
+		super();
+		this.keyboard = keyboard;
+		this.out = out;
+		this.prompt = prompt;
+	}
+	
+	public void setPHAddControl(PHAddControl phAddControl) {
+		this.phAddControl = phAddControl;
+	}
+	
+	public void setPHPrintcontrol(PHPrintControl phPrintControl) {
+		this.phPrintControl = phPrintControl;
+	}
+	
+	public void setPHLTAVGControl( PHLTAVGControl phltavgControl) {
+		this.phltavgControl = phltavgControl;
+	}
+	
+	public void setPHDeleteControl(PHDeleteControl phDeleteControl) {
+		this.phDeleteControl = phDeleteControl;
+	}
+	
+	public void setPHUpdateControl(PHUpdateControl phUpdateControl) {
+		this.phUpdateControl = phUpdateControl;
+	}
+	
+	public void setPHSearchControl(PHSearchControl phSearchControl) {
+		this.phSearchControl = phSearchControl;
+	}
+	
+	public void setPHCountControl(PHCountControl phCountControl) {
+		this.phCountControl = phCountControl;
+	}
+	
+	public void setPHFilterControl(PHFilterControl phFilterControl) {
+		this.phFilterControl = phFilterControl;
+	}
+	
+	public void controlLoop() {
+		out.println("Gõ lệnh \"help\" để được hỗ trợ!");
+		out.flush();
+		
+		while(true) {
+			String command = " ";
+			out.print(prompt);
+			out.flush();
+			command = keyboard.nextLine();// <== HELP , ABOUT, ADD, EDIT, DELETE,...
+			command = command.trim();// Cắt khoảng trắng 2 đầu
+			
+			if("help".equalsIgnoreCase(command)) {
+				 help();
+				continue;
+			}
+			
+			if("about".equalsIgnoreCase(command)) {
+				about();
+				continue;
+			}
+			
+			if("add".equalsIgnoreCase(command)) {
+				add();
+				continue;
+			}
+			
+			if("update".equalsIgnoreCase(command)) {
+				update();
+				continue;
+			}
+			
+			if("delete".equalsIgnoreCase(command)) {
+				delete();
+				continue;
+			}
+			
+			if("search".equalsIgnoreCase(command)) {
+				search();
+				continue;
+			}
+			
+			if("print".equalsIgnoreCase(command)) {
+				print();
+				continue;
+			}
+			
+			if("count".equalsIgnoreCase(command)) {
+				count();
+				continue;
+			}
+			
+			if("filter".equalsIgnoreCase(command)) {
+				filter();
+				continue;
+			}
+			
+			if("average".equalsIgnoreCase(command)) {
+				average();
+				continue;
+			}
+			
+			if("exit".equalsIgnoreCase(command)) {
+				break;
+			}
+		}
+	}
+	
+	private void help() {
+		out.println("===============================================");
+		out.flush();
+		out.println("|               USER HELP MENU                |");
+		out.flush();
+		out.println("===============================================");
+		out.flush();
+		out.println("| [HELP]    | Hướng dẫn sử dụng                |");
+		out.flush();
+		out.println("| [ABOUT]   | Thông tin về phần mềm            |");
+		out.flush();
+		out.println("| [ADD]     | Thêm sinh viên                   |");
+		out.flush();
+		out.println("| [UPDATE]  | Cập nhật thông tin phòng học     |");
+		out.flush();
+		out.println("| [DELETE]  | Xóa phòng học                    |");
+		out.flush();
+		out.println("| [SEARCH]  | Tìm kiếm phòng học               |");
+		out.flush();
+		out.println("| [PRINT]   | In ra danh sách tất cả phòng     |");
+		out.flush();
+		out.println("| [COUNT]   | Tổng số lượng phòng học từng loại|");
+		out.flush();
+		out.println("| [FILTER]  | Lọc ra các phòng không đạt chuẩn|");
+		out.flush();
+		out.println("| [AVERAGE] | Diện tích trung bình phòng lý thuyết |");
+		out.flush();
+		out.println("| [EXIT]    | Thoát chương trình               |");
+		out.flush();
+		out.println("===============================================");
+		out.flush();
+	}
+	
+	private void about() {
+		// TODO Auto-generated method stub
+		out.println("===============================================");
+		out.flush();
+		out.println("|          ABOUT THIS SOFTWARE                |");
+		out.flush();
+		out.println("===============================================");
+		out.flush();
+		out.println("| Tên phần mềm | Quản lý phòng học            |");
+		out.flush();
+		out.println("| Phiên bản    | 1.0                          |");
+		out.flush();
+		out.println("| Tác giả      | Nhóm 7 - Khóa 18 - Lớp 2     |");
+		out.flush();
+		out.println("| Mô tả        |                              |");
+		out.flush();
+		out.println("|    - Phần mềm quản lý phòng                 |");
+		out.flush();
+		out.println("|    - Hỗ trợ thêm, sửa, xóa, tìm            |");
+		out.flush();
+		out.println("|    - Xuất danh sách phòng lỗi              |");
+		out.flush();
+		out.println("|    - Thống kê số lượng, diện tích          |");
+		out.flush();
+		out.println("===============================================");
+		out.flush();
+	}
+
+	private void add() {
+		// TODO Auto-generated method stub
+		phAddControl.add();
+	}
+
+	private void update() {
+		// TODO Auto-generated method stub
+		phUpdateControl.update();
+	}
+
+	private void delete() {
+		// TODO Auto-generated method stub
+		phDeleteControl.delete();
+	}
+
+	private void search() {
+		// TODO Auto-generated method stub
+		phSearchControl.search();
+	}
+
+	private void print() {
+		// TODO Auto-generated method stub
+		phPrintControl.print();		
+	}
+
+	private void count() {
+		// TODO Auto-generated method stub
+		phCountControl.count();
+	}
+
+	private void filter() {
+		// TODO Auto-generated method stub
+		phFilterControl.filter();
+	}
+
+	private void average() {
+		// TODO Auto-generated method stub
+		phltavgControl.average();
+	}
+	
+
+}
+package com.qlph.ui;
+
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
+import com.qlph.model.PhongHoc;
+
+public class PHPrintOutput {
+	
+	// Ô 2 - Fields
+	private PrintWriter out;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHPrintOutput() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	// Parameter Constructor
+	public PHPrintOutput(PrintWriter out) {
+		super();
+		this.out = out;
+	}
+
+	public void output(ArrayList<PhongHoc> dsPH) {
+		if (dsPH.isEmpty()) {
+			out.println("---------------------");
+		    out.flush();
+			out.println("Vui lòng thêm phòng.");
+		    out.flush();
+			out.println("---------------------");
+		    out.flush();
+		} else {
+		    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		    out.println("==================================================================================================");
+		    out.flush();
+		    out.printf("%-15s %-12s %-15s %-15s %-18s %-15s%n", 
+		        "Mã Phòng", "Dãy Nhà", "Diện Tích", "Số Bóng Đèn", "Ngày Hoạt Động", "Loại Phòng");
+		    out.flush();
+		    out.println("==================================================================================================");
+		    out.flush();
+		    for (PhongHoc ph : dsPH) {
+		    	String loaiPhong = ph.getLoaiPhong();
+	
+		        // Chuyển đổi loại phòng từ mã viết tắt
+		        if (loaiPhong.equals("LT")) {
+		            loaiPhong = "Lý thuyết";
+		        } else if (loaiPhong.equals("MT")) {
+		            loaiPhong = "Máy tính";
+		        } else if (loaiPhong.equals("TN")) {
+		            loaiPhong = "Thí nghiệm";
+		        }
+		        
+		        out.printf("%-15s %-12s %-15.2f %-15d %-18s %-15s%n", 
+		            ph.getMaPhong(), ph.getDayNha(), ph.getDienTich(), ph.getSoBongDen(), 
+		            formatter.format(ph.getNgayHoatDong()), loaiPhong);
+		    }
+		    out.println("==================================================================================================");
+		    out.flush();
+		}
+	}
+	
+	
+}
+package com.qlph.ui;
+
+import java.io.PrintWriter;
+import java.util.Scanner;
+
+public class PHSearchInput {
+	
+	// Ô 2 - Fields
+	private Scanner keyboard;
+	private PrintWriter out;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHSearchInput() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	// Parameterized Constructor
+    public PHSearchInput(Scanner keyboard, PrintWriter out) {
+		super();
+		this.keyboard = keyboard;
+		this.out = out;
+	}
+
+
+	public String inputMaPhong() {
+		String maPhong;
+        System.out.print("Nhập mã phòng: ");
+        maPhong = keyboard.nextLine();
+        return maPhong;
+    }
+
+    public String inputLoaiPhong() {
+    	String loaiPhong;
+        out.print("Loại phòng (LT - MT - TN): ");
+		out.flush();
+		loaiPhong = keyboard.nextLine();
+		if ("LT".equalsIgnoreCase(loaiPhong)) {
+			loaiPhong = "LT";
+		}
+		if ("MT".equalsIgnoreCase(loaiPhong)) {
+			loaiPhong = "MT";
+		}
+		if ("TN".equalsIgnoreCase(loaiPhong)) {
+			loaiPhong = "TN";
+		}	
+        return loaiPhong;
+    }
+    
+    
+}
+package com.qlph.ui;
+
+import java.io.PrintWriter;
+
+import com.qlph.model.PhongHoc;
+
+public class PHSearchOutput {
+	
+	// Ô 2 - Fields
+	private PrintWriter out;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHSearchOutput() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	// Parameterized Constructor
+	public PHSearchOutput(PrintWriter out) {
+		super();
+		this.out = out;
+	}
+
+	public void printSearch(PhongHoc phong) {
+		out.println("-----------------------------");
+		out.flush();
+        if (phong == null) {
+            out.println("Phòng học không tồn tại.");
+        } else {
+            out.println(phong);
+        }
+    	out.flush();
+		out.println("-----------------------------");
+		out.flush();
+    }
+	
+	
+}
+package com.qlph.ui;
+
+import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
+
+import com.qlph.model.PHLyThuyet;
+import com.qlph.model.PHMayTinh;
+import com.qlph.model.PHThiNghiem;
+import com.qlph.model.PhongHoc;
+
+public class PHUpdateInput {
+	
+	// Ô 2 - Fields
+	Scanner keyboard;
+	PrintWriter out;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHUpdateInput() {
+		// TODO Auto-generated constructor stub
+	}
+
+	// Parameterized Constructor
+	public PHUpdateInput(Scanner keyboard, PrintWriter out) {
+		super();
+		this.keyboard = keyboard;
+		this.out = out;
+	}
+	
+	public String inputMaPhong() {
+		String maPhong;
+		
+		out.print("Mã phòng: ");
+		out.flush();
+		maPhong = keyboard.nextLine();
+		
+		return maPhong;
+	}
+	
+	public String inputLoaiPhong() {
+		String loaiPhong;
+		
+		out.print("Loại phòng (LT - MT - TN): ");
+		out.flush();
+		loaiPhong = keyboard.nextLine();
+		
+		return loaiPhong;
+	}
+	
+	public PhongHoc inputPH(String maPhong, String loaiPhong) {
+		
+		String dayNha;
+		double dienTich;
+		int soBongDen;
+		String ngayHoatDong;
+		
+		SimpleDateFormat formatter;
+		Date ngayHoatDongJava = null;
+		
+		PhongHoc ph = null;
+		
+        out.println("-------------------------------------------------------------");
+    	out.flush();
+		out.println("Phòng học đã được tìm thấy. Vui lòng nhập thông tin cập nhật.");
+		out.flush();
+        out.println("-------------------------------------------------------------");
+    	out.flush();
+		
+		out.print("Dãy nhà: ");
+		out.flush();
+		dayNha = keyboard.nextLine();
+		
+		out.print("Diện tích: ");
+		out.flush();
+		dienTich = keyboard.nextDouble();
+		
+		out.print("Số bóng đèn: ");
+		out.flush();
+		soBongDen = keyboard.nextInt();
+		keyboard.nextLine();
+		
+		out.print("Ngày hoạt động (dd/MM/yyyy): ");
+		out.flush();
+		ngayHoatDong = keyboard.nextLine();
+		formatter = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			ngayHoatDongJava = formatter.parse(ngayHoatDong);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if ("LT".equalsIgnoreCase(loaiPhong)) {
+			ph = inputPHLT(maPhong, dayNha, dienTich, soBongDen, ngayHoatDongJava);
+		}
+		if ("MT".equalsIgnoreCase(loaiPhong)) {
+			ph = inputPHMT(maPhong, dayNha, dienTich, soBongDen, ngayHoatDongJava);
+		}
+		if ("TN".equalsIgnoreCase(loaiPhong)) {
+			ph = inputPHTN(maPhong, dayNha, dienTich, soBongDen, ngayHoatDongJava);
+		}	
+		return ph;
+	}
+	
+	private PhongHoc inputPHLT(String maPhong, String dayNha, double dienTich, int soBongDen, Date ngayHoatDongJava) {
+		boolean hasMayChieu;
+		PHLyThuyet phLT;
+		
+		out.print("Có máy chiếu (true/false): ");
+		out.flush();
+		hasMayChieu = keyboard.nextBoolean();
+		
+		phLT = new PHLyThuyet(maPhong, dayNha, dienTich, soBongDen, ngayHoatDongJava, hasMayChieu);
+		return phLT;
+	}
+	
+	private PhongHoc inputPHMT(String maPhong, String dayNha, double dienTich, int soBongDen, Date ngayHoatDongJava) {
+		int soLuongMayTinh;
+		PHMayTinh phMT;
+		
+		out.print("Số lượng máy tính: ");
+		out.flush();
+		soLuongMayTinh = keyboard.nextInt();
+		keyboard.nextLine();
+		
+		phMT = new PHMayTinh(maPhong, dayNha, dienTich, soBongDen, ngayHoatDongJava, soLuongMayTinh);
+		return phMT;
+	}
+	
+	private PhongHoc inputPHTN(String maPhong, String dayNha, double dienTich, int soBongDen, Date ngayHoatDongJava) {
+		String chuyenNganh;
+		int sucChua;
+		boolean hasBonRua;
+		PHThiNghiem phTN;
+		
+		out.print("Chuyên ngành: ");
+		out.flush();
+		chuyenNganh = keyboard.nextLine();
+		
+		out.print("Sức chứa: ");
+		out.flush();
+		sucChua = keyboard.nextInt();
+		
+		out.print("Có bồn rửa (true/false): ");
+		out.flush();
+		hasBonRua = keyboard.nextBoolean();
+		
+		phTN = new PHThiNghiem(maPhong, dayNha, dienTich, soBongDen, ngayHoatDongJava, chuyenNganh, sucChua, hasBonRua);
+		return phTN;
+	}
+	
+	
+}
+package com.qlph.ui;
+
+import java.io.PrintWriter;
+
+import com.qlph.model.PhongHoc;
+
+public class PHUpdateOutput {
+	
+	// Ô 2 - Fields
+	private PrintWriter out;
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	public PHUpdateOutput() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	// Parameter Constructor
+	public PHUpdateOutput(PrintWriter out) {
+		super();
+		this.out = out;
+	}
+	
+	public void showMessage(PhongHoc ph) {
+		if (ph == null) {
+			out.println("-------------------------");
+	    	out.flush();
+			out.println("Phòng học không tồn tại!");
+			out.flush();
+			out.println("-------------------------");
+	    	out.flush();
+		} else {
+			out.println("------------------------------");
+			out.flush();
+			out.println("Cập nhật phòng học thành công!");
+			out.flush();
+			out.println(ph);
+			out.flush();
+			out.println("------------------------------");
+			out.flush();
+		}
+	}
+	
+	
+}
+package com.qlph.utils;
+
+import java.util.ArrayList;
+
+import com.qlph.model.PhongHoc;
+
+public class PHCountCalculator {
+	
+	// Ô 2 - Fields
+	
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	/*Không cần tạo vì java tự động tạo*/
+	
+	public int countPHLT(ArrayList<PhongHoc> dSPH) {
+		int soLuong = 0;
+		for (PhongHoc ph : dSPH) {
+			// Kiểm tra nếu phòng học là loại lý thuyết
+			if (ph.getLoaiPhong().equals("LT")) { 
+				soLuong++;
+			}
+		}
+		return soLuong;
+	}
+	public int countPHMT(ArrayList<PhongHoc> dSPH) {
+		int soLuong = 0;
+		for (PhongHoc ph : dSPH) {
+			// Kiểm tra nếu phòng học là loại lý thuyết
+			if (ph.getLoaiPhong().equals("MT")) { 
+				soLuong++;
+			}
+		}
+		return soLuong;
+	}
+	public int countPHTN(ArrayList<PhongHoc> dSPH) {
+		int soLuong = 0;
+		for (PhongHoc ph : dSPH) {
+			// Kiểm tra nếu phòng học là loại lý thuyết
+			if (ph.getLoaiPhong().equals("TN")) { 
+				soLuong++;
+			}
+		}
+		return soLuong;
+	}
+}
+package com.qlph.utils;
+
+import java.util.ArrayList;
+
+import com.qlph.model.PhongHoc;
+
+public class PHFilter {
+	
+	// Ô 2 - Fields
+	
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	/*Không cần tạo vì java tự động tạo*/
+	
+	public ArrayList<PhongHoc> filterPH(ArrayList<PhongHoc> dSPH) {
+	    ArrayList<PhongHoc> dsPKDC = new ArrayList<>();
+	    for (PhongHoc ph : dSPH) {
+	        if (!ph.isDatChuan()) {
+	        	dsPKDC.add(ph);
+	        }
+	    }
+	    return dsPKDC;
+	}
+}
+package com.qlph.utils;
+
+import java.util.ArrayList;
+
+import com.qlph.model.PhongHoc;
+
+public class PHLTAVGCalculator {
+	
+	// Ô 2 - Fields
+	
+	
+	// Ô 3 - Methods
+	// Default Constructor
+	/*Không cần tạo vì java tự động tạo*/
+	
+	public double calculatorAVG(ArrayList<PhongHoc> dsPH) {
+		double tongDienTich = 0;
+		int soLuongPhongHoc = 0;
+		for (PhongHoc ph : dsPH) {
+			// Kiểm tra nếu phòng học là loại Lý thuyết
+			if (ph.getLoaiPhong().equals("LT")) { 
+				tongDienTich += ph.getDienTich();
+				soLuongPhongHoc++;
+			}
+		}
+		return tongDienTich / soLuongPhongHoc;
+	}
+	
+	
+}

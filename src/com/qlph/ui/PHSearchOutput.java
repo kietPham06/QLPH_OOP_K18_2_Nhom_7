@@ -22,16 +22,16 @@ public class PHSearchOutput {
 	}
 
 	public void printSearch(PhongHoc phong) {
-        out.println("-------------------------");
-    	out.flush();
+		out.println("-----------------------------");
+		out.flush();
         if (phong == null) {
             out.println("Phòng học không tồn tại.");
         } else {
             out.println(phong);
         }
     	out.flush();
-        out.println("-------------------------");
-    	out.flush();
+		out.println("-----------------------------");
+		out.flush();
     }
 	
 	

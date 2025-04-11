@@ -32,7 +32,6 @@ public class PHDeleteInput {
 
 	public String inputLoaiPhong() {
     	String loaiPhong;
-        System.out.print("Nhập loại phòng: ");
         out.print("Loại phòng (LT - MT - TN): ");
 		out.flush();
 		loaiPhong = keyboard.nextLine();
@@ -44,7 +43,7 @@ public class PHDeleteInput {
 		}
 		if ("TN".equalsIgnoreCase(loaiPhong)) {
 			loaiPhong = "TN";
-		}	
+		}
         return loaiPhong;
     }
 	
