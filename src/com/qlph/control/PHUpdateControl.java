@@ -29,7 +29,7 @@ public class PHUpdateControl {
     public void update() {
         String maPhong;
         String loaiPhong;
-        PhongHoc ph;
+        PhongHoc kiemTraPH;
         PhongHoc newPH;
         PhongHoc updatedPH;
         
@@ -43,9 +43,9 @@ public class PHUpdateControl {
         // 3. Gửi thông điệp đến object PHUpdateOutput
         // Hiển thị thông báo cho người dùng
         
-        ph = phUpdateDAO.search(maPhong, loaiPhong);
+        kiemTraPH = phUpdateDAO.search(maPhong, loaiPhong);
         // Kiểm tra phòng học trong CSDL
-        if (ph == null) {
+        if (kiemTraPH == null) {
         	// Phòng không tồn tại
             phUpdateOutput.showMessage(null);
         } else {

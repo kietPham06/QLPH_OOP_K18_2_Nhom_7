@@ -27,7 +27,7 @@ public class PHDeleteControl {
 	}
 	
 	public void delete() {
-		PhongHoc ph;
+		PhongHoc kiemTraPH;
 		String maPhong;
 		String loaiPhong;
 		boolean xoaThanhCong;
@@ -42,9 +42,9 @@ public class PHDeleteControl {
 		// 3. Gửi thông điệp đến object PHDeleleOutput
 	    // Hiển thị thông báo cho người dùng
 		
-	    ph = phDeleteDAO.search(maPhong, loaiPhong);  
+		kiemTraPH = phDeleteDAO.search(maPhong, loaiPhong);  
 	    // Kiểm tra phòng học trong CSDL
-	    if (ph == null) {
+	    if (kiemTraPH == null) {
 	    	// Hiển thị thông báo
 	    	phDeleteOutput.showMessage(false);
 	    } else {
