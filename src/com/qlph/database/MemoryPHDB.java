@@ -19,6 +19,7 @@ public class MemoryPHDB {
 		
 		phDB = new ArrayList<PhongHoc>();
 		
+		// AI Generate
 		// 1. Phòng lý thuyết - Đạt chuẩn
         phDB.add(new PHLyThuyet("LT001", "A1", 50.0, 6, new Date(), true)); 
         // dienTich/10 = 5 <= 6, có máy chiếu -> Đạt
@@ -58,21 +59,48 @@ public class MemoryPHDB {
         // 10. Phòng lý thuyết - Không đạt (thiếu cả bóng đèn và máy chiếu)
         phDB.add(new PHLyThuyet("LT004", "A4", 60.0, 5, new Date(), false)); 
         // dienTich/10 = 6 > 5, không có máy chiếu -> Không đạt
-
+        
+     // Ghi chú: Danh sách mã phòng đạt chuẩn và không đạt chuẩn
+        // Đạt chuẩn:
+        // - LT001 (Phòng lý thuyết)
+        // - MT001 (Phòng máy tính)
+        // - MT003 (Phòng máy tính)
+        // - TN001 (Phòng thí nghiệm)
+        // - TN003 (Phòng thí nghiệm)
+        // Không đạt chuẩn:
+        // - LT002 (Phòng lý thuyết - thiếu máy chiếu)
+        // - LT003 (Phòng lý thuyết - thiếu bóng đèn)
+        // - LT004 (Phòng lý thuyết - thiếu bóng đèn và máy chiếu)
+        // - MT002 (Phòng máy tính - thiếu máy tính)
+        // - TN002 (Phòng thí nghiệm - thiếu bồn rửa)
+        
+     // Kết quả thống kê:
+     // Số lượng phòng lý thuyết: 4
+     // Số lượng phòng máy tính: 3
+     // Số lượng phòng thí nghiệm: 3
+     // Diện tích trung bình phòng lý thuyết: 50.0
+        
 	}
 	
 	// Ô 3 - Methods
 	public static void insert(PhongHoc ph) {
+		// Thao tác thêm phòng vào danh sách (thêm một phần tử vào Mảng)
 		phDB.add(ph);
 	}
 	
 	public static ArrayList<PhongHoc> getDSPH() {
+		// Trả về danh sách phòng (trả về mảng)
 		return phDB;
 	}
 	
 	public static boolean delete(String maPhong, String loaiPhong) {
+		// Duyệt ngược, vì nếu duyệt từ trái sang phải khi xóa một phần tử nó sẽ dịch từ phải sang trái
+		// lần duyệt tiếp theo có thể bỏ qua một phần tử
+		// Nếu dùng duyệt ngược thì duyệt từ phải sang trái cùng chiều với phần tử dịch từ phải sang trái
 	    for (int i = phDB.size() - 1; i >= 0; i--) {
 	        PhongHoc ph = phDB.get(i);
+	    	// Nếu duyệt đến phần tử null thì bỏ qua phần tử này và duyệt đến phần tử tiếp theo trong vòng lặp
+	        if (ph == null) continue;
 	        if (ph.getMaPhong().equalsIgnoreCase(maPhong) && ph.getLoaiPhong().equalsIgnoreCase(loaiPhong)) {
 	            phDB.remove(i);
 	            return true; // Xóa thành công
@@ -82,17 +110,20 @@ public class MemoryPHDB {
 	}
 	
 	public static PhongHoc search(String maPhong, String loaiPhong) {
-        for (PhongHoc phong : phDB) {
-            if (phong.getMaPhong().equalsIgnoreCase(maPhong) &&
-                phong.getLoaiPhong().equalsIgnoreCase(loaiPhong)) {
-                return phong;
+        for (PhongHoc ph : phDB) {
+	    	// Nếu duyệt đến phần tử null thì bỏ qua phần tử này và duyệt đến phần tử tiếp theo trong for-each
+	        if (ph == null) continue;
+            if (ph.getMaPhong().equalsIgnoreCase(maPhong) &&
+                ph.getLoaiPhong().equalsIgnoreCase(loaiPhong)) {
+                return ph; // Tìm thấy phòng
             }
         }
-        return null;
+        return null; // Phòng không tồn tại
     }
 	
 	public static PhongHoc update(PhongHoc newPH) {
 	    for (PhongHoc oldPH : phDB) {
+	    	// Nếu duyệt đến phần tử null thì bỏ qua phần tử này và duyệt đến phần tử tiếp theo trong for-each
 	        if (oldPH == null) continue;
 
 	        // So sánh đúng phòng cần cập nhật
@@ -108,16 +139,19 @@ public class MemoryPHDB {
 
 	            // Cập nhật thuộc tính riêng theo loại phòng
 	            if (oldPH.getLoaiPhong().equalsIgnoreCase("LT")) {
+	            	// Ép về kiểu con để gọi phương thức đặc thù
 	                PHLyThuyet oldLT = (PHLyThuyet) oldPH;
 	                PHLyThuyet newLT = (PHLyThuyet) newPH;
 	                oldLT.setMayChieu(newLT.isMayChieu());
 
 	            } else if (oldPH.getLoaiPhong().equalsIgnoreCase("MT")) {
+	            	// Ép về kiểu con để gọi phương thức đặc thù
 	                PHMayTinh oldMT = (PHMayTinh) oldPH;
 	                PHMayTinh newMT = (PHMayTinh) newPH;
 	                oldMT.setSoLuongMayTinh(newMT.getSoLuongMayTinh());
 
 	            } else if (oldPH.getLoaiPhong().equalsIgnoreCase("TN")) {
+	            	// Ép về kiểu con để gọi phương thức đặc thù
 	                PHThiNghiem oldTN = (PHThiNghiem) oldPH;
 	                PHThiNghiem newTN = (PHThiNghiem) newPH;
 	                oldTN.setChuyenNganh(newTN.getChuyenNganh());

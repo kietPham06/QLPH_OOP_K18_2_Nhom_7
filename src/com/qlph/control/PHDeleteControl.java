@@ -1,5 +1,7 @@
 package com.qlph.control;
 
+import java.util.ArrayList;
+
 import com.qlph.database.PHDeleteDAO;
 import com.qlph.model.PhongHoc;
 import com.qlph.ui.PHDeleteInput;
@@ -27,6 +29,7 @@ public class PHDeleteControl {
 	}
 	
 	public void delete() {
+		ArrayList<PhongHoc> kiemTraDSPH;
 		PhongHoc kiemTraPH;
 		String maPhong;
 		String loaiPhong;
@@ -34,25 +37,33 @@ public class PHDeleteControl {
 		
 	    // 1. Gửi thông điệp đến object PHDeleteInput
 	    // Người dùng nhập thông tin phòng cần xóa
-		maPhong = phDeleteInput.inputMaPhong();
-		loaiPhong = phDeleteInput.inputLoaiPhong();
-	    
 	    // 2. Gửi thông điệp đến object PHDeleteDAO
 		// Kiểm tra phòng học và xử lý xóa
 		// 3. Gửi thông điệp đến object PHDeleleOutput
 	    // Hiển thị thông báo cho người dùng
 		
-		kiemTraPH = phDeleteDAO.search(maPhong, loaiPhong);  
-	    // Kiểm tra phòng học trong CSDL
-	    if (kiemTraPH == null) {
-	    	// Hiển thị thông báo
-	    	phDeleteOutput.showMessage(false);
-	    } else {
-	    	// Thực hiện thao tác xóa trong CSDL
-	    	xoaThanhCong = phDeleteDAO.delete(maPhong, loaiPhong);
-	    	// Hiển thị thông báo
-	    	phDeleteOutput.showMessage(xoaThanhCong);
-	    }
+		kiemTraDSPH = phDeleteDAO.getDSPH();
+		// Kiểm tra danh sách phòng học
+		if (kiemTraDSPH.isEmpty()) {
+			// Hiển thị thông báo
+			phDeleteOutput.DSPHIsEmpty();
+		} else {
+		    // Người dùng nhập thông tin phòng cần xóa
+			maPhong = phDeleteInput.inputMaPhong();
+			loaiPhong = phDeleteInput.inputLoaiPhong();
+			kiemTraPH = phDeleteDAO.search(maPhong, loaiPhong); 
+			// Kiểm tra phòng học
+			if (kiemTraPH == null) {
+		    	// Hiển thị thông báo
+		    	phDeleteOutput.showMessage(false);
+		    } else {
+		    	// Thực hiện thao tác xóa trong CSDL
+		    	xoaThanhCong = phDeleteDAO.delete(maPhong, loaiPhong);
+		    	// Hiển thị thông báo
+		    	phDeleteOutput.showMessage(xoaThanhCong);
+		    }
+		}
+	    
 	}
 
 	

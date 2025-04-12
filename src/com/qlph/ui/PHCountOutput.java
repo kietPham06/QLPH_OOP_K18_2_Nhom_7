@@ -19,14 +19,14 @@ public class PHCountOutput {
 		this.out = out;
 	}
 	
-	public void countPrint(int Countphlt,int Countphmt,int Countphtn) {
+	public void countPrint(int countPHLT,int countPHMT,int countPHTN) {
 		out.println("-------------------------------------------------");
 		out.flush();
-		out.println("[Tổng số lượng phòng học lý thuyết]= " + Countphlt);
+		out.println("[Tổng số lượng phòng học lý thuyết]= " + countPHLT);
 		out.flush();
-		out.println("[Tổng số lượng phòng học máy tính]= " + Countphmt);
+		out.println("[Tổng số lượng phòng học máy tính]= " + countPHMT);
 		out.flush();
-		out.println("[Tổng số lượng phòng học thí nghiệm]= " + Countphtn);
+		out.println("[Tổng số lượng phòng học thí nghiệm]= " + countPHTN);
 		out.flush();
 		out.println("-------------------------------------------------");
 		out.flush();

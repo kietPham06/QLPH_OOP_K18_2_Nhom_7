@@ -32,5 +32,14 @@ public class PHDeleteOutput {
 		out.flush();
 	}
 	
+    public void DSPHIsEmpty() { 
+    	out.println("--------------------------------------------------");
+	    out.flush();
+		out.println("Hiện tại, không có phòng học nào trong danh sách.");
+	    out.flush();
+	  	out.println("--------------------------------------------------");
+	    out.flush();
+    }
+	
 	
 }

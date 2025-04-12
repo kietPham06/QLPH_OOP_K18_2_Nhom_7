@@ -34,5 +34,14 @@ public class PHSearchOutput {
 		out.flush();
     }
 	
+    public void DSPHIsEmpty() { 
+    	out.println("---------------------");
+	    out.flush();
+		out.println("Vui lòng thêm phòng.");
+	    out.flush();
+		out.println("---------------------");
+	    out.flush();
+    }
+	
 	
 }

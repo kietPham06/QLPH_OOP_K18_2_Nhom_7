@@ -1,5 +1,7 @@
 package com.qlph.control;
 
+import java.util.ArrayList;
+
 import com.qlph.database.PHSearchDAO;
 import com.qlph.model.PhongHoc;
 import com.qlph.ui.PHSearchInput;
@@ -27,23 +29,33 @@ public class PHSearchControl {
 	}
 	
 	public void search() {
+		ArrayList<PhongHoc> kiemTraDSPH;
+		PhongHoc kiemTraPH;
 		String maPhong;
 		String loaiPhong;
-		PhongHoc ph;
 		
 		// Phối hợp với các đối tượng
 		// 1. Gửi thông điệp đến object PHSearchInput
 		// Người dùng nhập thông tin phòng cần tìm
-		maPhong = phSearchInput.inputMaPhong();
-		loaiPhong = phSearchInput.inputLoaiPhong();
-		
 		// 2. Gửi thông điệp đến object PHSearchDAO
 		// Tìm kiếm phòng học trong CSDL trùng khớp với thông tin người dùng nhập
-		ph = phSearchDAO.search(maPhong, loaiPhong);
-		
 		// 3. Gửi thông điệp đến object PHSearchOutput
 		// Hiển thị thông tin phòng
-		phSearchOutput.printSearch(ph);
+			
+		kiemTraDSPH = phSearchDAO.getDSPH();
+		// Kiểm tra danh sách phòng học
+		if (kiemTraDSPH.isEmpty()) {
+			// Hiển thị thông báo
+			phSearchOutput.DSPHIsEmpty();
+		} else {
+			// Người dùng nhập thông tin phòng cần tìm
+			maPhong = phSearchInput.inputMaPhong();
+			loaiPhong = phSearchInput.inputLoaiPhong();
+			// Tìm kiếm phòng học trong CSDL trùng khớp với thông tin người dùng nhập
+			kiemTraPH = phSearchDAO.search(maPhong, loaiPhong);
+			// Hiển thị thông tin phòng
+			phSearchOutput.printSearch(kiemTraPH);
+		}
 	}
 }
 
