@@ -101,131 +101,71 @@ public class PHCountControl {
 }
 package com.qlph.control;
 
-import java.util.ArrayList;
-
 import com.qlph.database.PHDeleteDAO;
-import com.qlph.model.PhongHoc;
+import com.qlph.logic.PHDeleteLogic;
 import com.qlph.ui.PHDeleteInput;
 import com.qlph.ui.PHDeleteOutput;
 
 public class PHDeleteControl {
-		
-	// Ô 2 - Fields
-	private PHDeleteDAO phDeleteDAO;
-	private PHDeleteInput phDeleteInput;
-	private PHDeleteOutput phDeleteOutput;
-	
-	// Ô 3 - Methods
-	// Default Constructor
-	public PHDeleteControl() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	// Parameterized Constructor
-	public PHDeleteControl(PHDeleteDAO phDeleteDAO, PHDeleteInput phDeleteInput, PHDeleteOutput phDeleteOutput) {
-		super();
-		this.phDeleteDAO = phDeleteDAO;
-		this.phDeleteInput = phDeleteInput;
-		this.phDeleteOutput = phDeleteOutput;
-	}
-	
-	public void delete() {
-		ArrayList<PhongHoc> kiemTraDSPH;
-		PhongHoc kiemTraPH;
-		String maPhong;
-		String loaiPhong;
-		boolean xoaThanhCong;
-		
-	    // 1. Gửi thông điệp đến object PHDeleteInput
-	    // Người dùng nhập thông tin phòng cần xóa
-	    // 2. Gửi thông điệp đến object PHDeleteDAO
-		// Kiểm tra phòng học và xử lý xóa
-		// 3. Gửi thông điệp đến object PHDeleleOutput
-	    // Hiển thị thông báo cho người dùng
-		
-		kiemTraDSPH = phDeleteDAO.getDSPH();
-		// Kiểm tra danh sách phòng học
-		if (kiemTraDSPH.isEmpty()) {
-			// Hiển thị thông báo
-			phDeleteOutput.DSPHIsEmpty();
-		} else {
-		    // Người dùng nhập thông tin phòng cần xóa
-			maPhong = phDeleteInput.inputMaPhong();
-			loaiPhong = phDeleteInput.inputLoaiPhong();
-			kiemTraPH = phDeleteDAO.search(maPhong, loaiPhong); 
-			// Kiểm tra phòng học
-			if (kiemTraPH == null) {
-		    	// Hiển thị thông báo
-		    	phDeleteOutput.showMessage(false);
-		    } else {
-		    	// Thực hiện thao tác xóa trong CSDL
-		    	xoaThanhCong = phDeleteDAO.delete(maPhong, loaiPhong);
-		    	// Hiển thị thông báo
-		    	phDeleteOutput.showMessage(xoaThanhCong);
-		    }
-		}
-	    
-	}
-
-	
+    
+    // Ô 2 - Fields
+    private PHDeleteDAO phDeleteDAO;
+    private PHDeleteInput phDeleteInput;
+    private PHDeleteOutput phDeleteOutput;
+    private PHDeleteLogic phDeleteLogic;
+    
+    // Ô 3 - Methods
+    // Default Constructor
+    public PHDeleteControl() {
+        this.phDeleteLogic = new PHDeleteLogic();
+    }
+    
+    // Parameterized Constructor
+    public PHDeleteControl(PHDeleteDAO phDeleteDAO, PHDeleteInput phDeleteInput, PHDeleteOutput phDeleteOutput) {
+        super();
+        this.phDeleteDAO = phDeleteDAO;
+        this.phDeleteInput = phDeleteInput;
+        this.phDeleteOutput = phDeleteOutput;
+        this.phDeleteLogic = new PHDeleteLogic();
+    }
+    
+    public void delete() {
+        phDeleteLogic.processDelete(phDeleteDAO, phDeleteInput, phDeleteOutput);
+    }
 }
 package com.qlph.control;
 
-import java.util.ArrayList;
-
 import com.qlph.database.PHFilterDAO;
-import com.qlph.model.PhongHoc;
+import com.qlph.logic.PHFilterLogic;
 import com.qlph.ui.PHFilterOutput;
 import com.qlph.utils.PHFilter;
 
 public class PHFilterControl {
-	
-	// Ô 2 - Fields
-	private PHFilterDAO phFilterDAO;
-	private PHFilter phFilter;
-	private PHFilterOutput phFilterOutput;
-	
-	// Ô 3 - Methods
-	// Default Constructor
-	public PHFilterControl() {
-		// TODO Auto-generated constructor stub
-	}
+    
+    // Ô 2 - Fields
+    private PHFilterDAO phFilterDAO;
+    private PHFilter phFilter;
+    private PHFilterOutput phFilterOutput;
+    private PHFilterLogic phFilterLogic;
+    
+    // Ô 3 - Methods
+    // Default Constructor
+    public PHFilterControl() {
+        this.phFilterLogic = new PHFilterLogic();
+    }
 
-	// Parameterized Constructor
-	public PHFilterControl(PHFilterDAO phFilterDAO, PHFilter phFilter, PHFilterOutput phFilterOutput) {
-		super();
-		this.phFilterDAO = phFilterDAO;
-		this.phFilter = phFilter;
-		this.phFilterOutput = phFilterOutput;
-	}
-	
-	public void filter() {
-		ArrayList<PhongHoc> dSPH;
-		ArrayList<PhongHoc> dSPKDC;
-		
-		// Phối hợp với các đối tượng
-		// 1. Gửi thông điệp đến object PHFilterDAO
-		// Lấy ra danh sách phòng học từ CSDL
-		dSPH = phFilterDAO.getDSPH();
-		
-		// 2. Gửi thông điệp đến object PHFilter
-		// Lọc ra các phòng không đạt chuẩn
-		// 3. Gửi thông điệp đến object PHFilterOutput
-		// Hiển thị các phòng không đạt chuẩn
-		
-		 // Nếu danh sách phòng học trống
-		if (dSPH.isEmpty()) {
-			// Yêu cầu người dùng thêm phòng
-			phFilterOutput.DSPHIsEmpty();
-		} else {
-			// Lọc danh sách phòng học
-			dSPKDC = phFilter.filterPH(dSPH);
-			// In ra phòng không đạt chuẩn
-			phFilterOutput.printFilter(dSPKDC);
-		}
-	}
-	
-	
+    // Parameterized Constructor
+    public PHFilterControl(PHFilterDAO phFilterDAO, PHFilter phFilter, PHFilterOutput phFilterOutput) {
+        super();
+        this.phFilterDAO = phFilterDAO;
+        this.phFilter = phFilter;
+        this.phFilterOutput = phFilterOutput;
+        this.phFilterLogic = new PHFilterLogic();
+    }
+    
+    public void filter() {
+        phFilterLogic.processFilter(phFilterDAO, phFilter, phFilterOutput);
+    }
 }
 package com.qlph.control;
 
@@ -322,134 +262,70 @@ public class PHPrintControl {
 }
 package com.qlph.control;
 
-import java.util.ArrayList;
-
 import com.qlph.database.PHSearchDAO;
-import com.qlph.model.PhongHoc;
+import com.qlph.logic.PHSearchLogic;
 import com.qlph.ui.PHSearchInput;
 import com.qlph.ui.PHSearchOutput;
 
 public class PHSearchControl {
-	
-	// Ô 2 - Fields
-	PHSearchDAO phSearchDAO;
-	PHSearchInput phSearchInput;
-	PHSearchOutput phSearchOutput;
-	
-	// Ô 3 - Methods
-	// Default Constructor
-	public PHSearchControl() {
-		// TODO Auto-generated constructor stub
-	}
+    private PHSearchDAO phSearchDAO;
+    private PHSearchInput phSearchInput;
+    private PHSearchOutput phSearchOutput;
+    private PHSearchLogic phSearchLogic;
+    
+    public PHSearchControl() {
+        this.phSearchLogic = new PHSearchLogic();
+    }
 
-	// Parameterized Constructor
-	public PHSearchControl(PHSearchDAO phSearchDAO, PHSearchInput phSearchInput, PHSearchOutput phSearchOutput) {
-		super();
-		this.phSearchDAO = phSearchDAO;
-		this.phSearchInput = phSearchInput;
-		this.phSearchOutput = phSearchOutput;
-	}
-	
-	public void search() {
-		ArrayList<PhongHoc> kiemTraDSPH;
-		PhongHoc kiemTraPH;
-		String maPhong;
-		String loaiPhong;
-		
-		// Phối hợp với các đối tượng
-		// 1. Gửi thông điệp đến object PHSearchInput
-		// Người dùng nhập thông tin phòng cần tìm
-		// 2. Gửi thông điệp đến object PHSearchDAO
-		// Tìm kiếm phòng học trong CSDL trùng khớp với thông tin người dùng nhập
-		// 3. Gửi thông điệp đến object PHSearchOutput
-		// Hiển thị thông tin phòng
-			
-		kiemTraDSPH = phSearchDAO.getDSPH();
-		// Kiểm tra danh sách phòng học
-		if (kiemTraDSPH.isEmpty()) {
-			// Hiển thị thông báo
-			phSearchOutput.DSPHIsEmpty();
-		} else {
-			// Người dùng nhập thông tin phòng cần tìm
-			maPhong = phSearchInput.inputMaPhong();
-			loaiPhong = phSearchInput.inputLoaiPhong();
-			// Tìm kiếm phòng học trong CSDL trùng khớp với thông tin người dùng nhập
-			kiemTraPH = phSearchDAO.search(maPhong, loaiPhong);
-			// Hiển thị thông tin phòng
-			phSearchOutput.printSearch(kiemTraPH);
-		}
-	}
+    public PHSearchControl(PHSearchDAO phSearchDAO, PHSearchInput phSearchInput, PHSearchOutput phSearchOutput) {
+        super();
+        this.phSearchDAO = phSearchDAO;
+        this.phSearchInput = phSearchInput;
+        this.phSearchOutput = phSearchOutput;
+        this.phSearchLogic = new PHSearchLogic();
+    }
+    
+    public void search() {
+        phSearchLogic.processSearch(phSearchDAO, phSearchInput, phSearchOutput);
+    }
+    
+    
 }
-
 package com.qlph.control;
 
-import java.util.ArrayList;
-
 import com.qlph.database.PHUpdateDAO;
-import com.qlph.model.PhongHoc;
+import com.qlph.logic.PHUpdateLogic;
 import com.qlph.ui.PHUpdateInput;
 import com.qlph.ui.PHUpdateOutput;
 
 public class PHUpdateControl {
-
+    
     // Ô 2 - Fields
     private PHUpdateDAO phUpdateDAO;
     private PHUpdateInput phUpdateInput;
     private PHUpdateOutput phUpdateOutput;
+    private PHUpdateLogic phUpdateLogic;
     
     // Ô 3 - Methods
     // Default Constructor
     public PHUpdateControl() {
-        // TODO Auto-generated constructor stub
+        this.phUpdateLogic = new PHUpdateLogic();
     }
 
-    // Parameter Constructor
+    // Parameterized Constructor
     public PHUpdateControl(PHUpdateDAO phUpdateDAO, PHUpdateInput phUpdateInput, PHUpdateOutput phUpdateOutput) {
         super();
         this.phUpdateDAO = phUpdateDAO;
         this.phUpdateInput = phUpdateInput;
         this.phUpdateOutput = phUpdateOutput;
+        this.phUpdateLogic = new PHUpdateLogic();
     }
     
     public void update() {
-    	ArrayList<PhongHoc> kiemTraDSPH;
-    	PhongHoc kiemTraPH;
-        String maPhong;
-        String loaiPhong;
-        PhongHoc newPH;
-        PhongHoc updatedPH;
-        
-        // 1. Gửi thông điệp đến object PHUpdateInput
-        // Người dùng nhập thông tin phòng cần cập nhật
-        // 2. Gửi thông điệp đến object PHUpdateDAO
-        // Kiểm tra thông tin phòng học và cập nhật phòng
-        // 3. Gửi thông điệp đến object PHUpdateOutput
-        // Hiển thị thông báo cho người dùng
-        
-        kiemTraDSPH = phUpdateDAO.getDSPH();
-        // Kiểm tra danh sách phòng học
-        if (kiemTraDSPH.isEmpty()) {
-        	// Hiển thị thông báo
-        	phUpdateOutput.DSPHIsEmpty();
-        } else {
-            // Người dùng nhập thông tin phòng cần cập nhật
-            maPhong = phUpdateInput.inputMaPhong();
-            loaiPhong = phUpdateInput.inputLoaiPhong();
-            kiemTraPH = phUpdateDAO.search(maPhong, loaiPhong);
-            // Kiểm tra phòng học
-            if (kiemTraPH == null) {
-            	// Phòng không tồn tại
-                phUpdateOutput.showMessage(null);
-            } else {
-            	// Người dùng nhập dữ liệu phòng cần cập nhật
-            	newPH = phUpdateInput.inputPH(maPhong, loaiPhong);
-                // Cập nhật phòng học trong CSDL
-                updatedPH = phUpdateDAO.update(newPH);
-                // Hiển thị thông báo cho người dùng
-                phUpdateOutput.showMessage(updatedPH);
-            }
-        }
+        phUpdateLogic.processUpdate(phUpdateDAO, phUpdateInput, phUpdateOutput);
     }
+    
+    
 }
 package com.qlph.database;
 
@@ -802,6 +678,168 @@ public class PHUpdateDAO {
 	    return MemoryPHDB.update(newPH);
 	}
 	
+}
+package com.qlph.logic;
+
+import java.util.ArrayList;
+import com.qlph.model.PhongHoc;
+import com.qlph.database.PHDeleteDAO;
+import com.qlph.ui.PHDeleteInput;
+import com.qlph.ui.PHDeleteOutput;
+
+public class PHDeleteLogic {
+
+    public void processDelete(PHDeleteDAO phDeleteDAO, PHDeleteInput phDeleteInput, PHDeleteOutput phDeleteOutput) {
+        ArrayList<PhongHoc> kiemTraDSPH;
+        PhongHoc kiemTraPH;
+        String maPhong;
+        String loaiPhong;
+        boolean xoaThanhCong;
+
+        // Lấy danh sách phòng học từ CSDL
+        kiemTraDSPH = phDeleteDAO.getDSPH();
+
+        // Kiểm tra danh sách phòng học
+        if (kiemTraDSPH.isEmpty()) {
+            // Hiển thị thông báo danh sách rỗng
+            phDeleteOutput.DSPHIsEmpty();
+        } else {
+            // Người dùng nhập thông tin phòng cần xóa
+            maPhong = phDeleteInput.inputMaPhong();
+            loaiPhong = phDeleteInput.inputLoaiPhong();
+
+            // Kiểm tra phòng học tồn tại
+            kiemTraPH = phDeleteDAO.search(maPhong, loaiPhong);
+
+            // Kiểm tra phòng học
+            if (kiemTraPH == null) {
+                // Hiển thị thông báo xóa thất bại
+                phDeleteOutput.showMessage(false);
+            } else {
+                // Thực hiện thao tác xóa trong CSDL
+                xoaThanhCong = phDeleteDAO.delete(maPhong, loaiPhong);
+
+                // Hiển thị thông báo kết quả
+                phDeleteOutput.showMessage(xoaThanhCong);
+            }
+        }
+    }
+}
+package com.qlph.logic;
+
+import java.util.ArrayList;
+import com.qlph.model.PhongHoc;
+import com.qlph.database.PHFilterDAO;
+import com.qlph.ui.PHFilterOutput;
+import com.qlph.utils.PHFilter;
+
+public class PHFilterLogic {
+
+    public void processFilter(PHFilterDAO phFilterDAO, PHFilter phFilter, PHFilterOutput phFilterOutput) {
+        ArrayList<PhongHoc> dSPH;
+        ArrayList<PhongHoc> dSPKDC;
+
+        // Lấy danh sách phòng học từ CSDL
+        dSPH = phFilterDAO.getDSPH();
+
+        // Kiểm tra danh sách phòng học
+        if (dSPH.isEmpty()) {
+            // Yêu cầu người dùng thêm phòng
+            phFilterOutput.DSPHIsEmpty();
+        } else {
+            // Lọc danh sách phòng học không đạt chuẩn
+            dSPKDC = phFilter.filterPH(dSPH);
+
+            // In ra các phòng không đạt chuẩn
+            phFilterOutput.printFilter(dSPKDC);
+        }
+    }
+}
+package com.qlph.logic;
+
+import java.util.ArrayList;
+import com.qlph.model.PhongHoc;
+import com.qlph.database.PHSearchDAO;
+import com.qlph.ui.PHSearchInput;
+import com.qlph.ui.PHSearchOutput;
+
+public class PHSearchLogic {
+
+    public void processSearch(PHSearchDAO phSearchDAO, PHSearchInput phSearchInput, PHSearchOutput phSearchOutput) {
+        ArrayList<PhongHoc> kiemTraDSPH;
+        String maPhong;
+        String loaiPhong;
+        PhongHoc kiemTraPH;
+
+        // Lấy danh sách phòng học từ CSDL
+        kiemTraDSPH = phSearchDAO.getDSPH();
+
+        // Kiểm tra danh sách phòng học
+        if (kiemTraDSPH.isEmpty()) {
+            // Hiển thị thông báo danh sách rỗng
+            phSearchOutput.DSPHIsEmpty();
+        } else {
+            // Người dùng nhập thông tin phòng cần tìm
+            maPhong = phSearchInput.inputMaPhong();
+            loaiPhong = phSearchInput.inputLoaiPhong();
+
+            // Tìm kiếm phòng học trong CSDL
+            kiemTraPH = phSearchDAO.search(maPhong, loaiPhong);
+
+            // Hiển thị thông tin phòng
+            phSearchOutput.printSearch(kiemTraPH);
+        }
+    }
+}
+package com.qlph.logic;
+
+import java.util.ArrayList;
+import com.qlph.model.PhongHoc;
+import com.qlph.database.PHUpdateDAO;
+import com.qlph.ui.PHUpdateInput;
+import com.qlph.ui.PHUpdateOutput;
+
+public class PHUpdateLogic {
+
+    public void processUpdate(PHUpdateDAO phUpdateDAO, PHUpdateInput phUpdateInput, PHUpdateOutput phUpdateOutput) {
+        ArrayList<PhongHoc> kiemTraDSPH;
+        PhongHoc kiemTraPH;
+        String maPhong;
+        String loaiPhong;
+        PhongHoc newPH;
+        PhongHoc updatedPH;
+
+        // Lấy danh sách phòng học từ CSDL
+        kiemTraDSPH = phUpdateDAO.getDSPH();
+
+        // Kiểm tra danh sách phòng học
+        if (kiemTraDSPH.isEmpty()) {
+            // Hiển thị thông báo danh sách rỗng
+            phUpdateOutput.DSPHIsEmpty();
+        } else {
+            // Người dùng nhập thông tin phòng cần cập nhật
+            maPhong = phUpdateInput.inputMaPhong();
+            loaiPhong = phUpdateInput.inputLoaiPhong();
+
+            // Kiểm tra phòng học tồn tại
+            kiemTraPH = phUpdateDAO.search(maPhong, loaiPhong);
+
+            // Kiểm tra phòng học
+            if (kiemTraPH == null) {
+                // Phòng không tồn tại
+                phUpdateOutput.showMessage(null);
+            } else {
+                // Người dùng nhập dữ liệu phòng cần cập nhật
+                newPH = phUpdateInput.inputPH(maPhong, loaiPhong);
+
+                // Cập nhật phòng học trong CSDL
+                updatedPH = phUpdateDAO.update(newPH);
+
+                // Hiển thị thông báo cho người dùng
+                phUpdateOutput.showMessage(updatedPH);
+            }
+        }
+    }
 }
 package com.qlph.main;
 
