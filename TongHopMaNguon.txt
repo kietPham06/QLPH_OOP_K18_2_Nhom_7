@@ -1,3 +1,5 @@
+// Tệp này được dùng để AI xử lý chỉnh sửa và kiểm tra độ chính xác của mã nguồn
+
 package com.qlph.control;
 
 import com.qlph.database.PHAddDAO;
