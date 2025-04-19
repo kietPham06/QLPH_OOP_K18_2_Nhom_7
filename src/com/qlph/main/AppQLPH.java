@@ -18,7 +18,6 @@ import com.qlph.database.PHPrintDAO;
 import com.qlph.database.PHSearchDAO;
 import com.qlph.database.PHUpdateDAO;
 import com.qlph.logic.PHDeleteLogic;
-import com.qlph.logic.PHFilterLogic;
 import com.qlph.logic.PHSearchLogic;
 import com.qlph.logic.PHUpdateLogic;
 import com.qlph.database.PHDeleteDAO;
@@ -98,7 +97,6 @@ public class AppQLPH {
 		PHFilterDAO phFilterDAO;
 		PHFilter phFilter;
 		PHFilterOutput phFilterOutput;
-		PHFilterLogic phFilterLogic;
 		PHFilterControl phFilterControl;
 		
 		// Khai báo biến tham chiếu menu
@@ -157,8 +155,7 @@ public class AppQLPH {
 		phFilterDAO /* Bước 3 */ = /* Bước 2 */ new PHFilterDAO();
 		phFilter /* Bước 3 */ = /* Bước 2 */ new PHFilter();
 		phFilterOutput /* Bước 3 */ = /* Bước 2 */ new PHFilterOutput(out);
-		phFilterLogic = new PHFilterLogic();
-		phFilterControl /* Bước 3 */ = /* Bước 2 */ new PHFilterControl(phFilterDAO, phFilter, phFilterOutput, phFilterLogic);
+		phFilterControl /* Bước 3 */ = /* Bước 2 */ new PHFilterControl(phFilterDAO, phFilter, phFilterOutput);
 		
 		// Hiển thị menu
 		menu /* Bước 3 */ = /* Bước 2 */ new PHMenu(keyboard, out, prompt);
