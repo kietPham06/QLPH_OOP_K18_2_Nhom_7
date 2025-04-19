@@ -17,6 +17,10 @@ import com.qlph.database.PHCountDAO;
 import com.qlph.database.PHPrintDAO;
 import com.qlph.database.PHSearchDAO;
 import com.qlph.database.PHUpdateDAO;
+import com.qlph.logic.PHDeleteLogic;
+import com.qlph.logic.PHFilterLogic;
+import com.qlph.logic.PHSearchLogic;
+import com.qlph.logic.PHUpdateLogic;
 import com.qlph.database.PHDeleteDAO;
 import com.qlph.database.PHFilterDAO;
 import com.qlph.ui.PHLTAVGOutput;
@@ -67,18 +71,21 @@ public class AppQLPH {
 		PHDeleteDAO phDeleteDAO;
 		PHDeleteInput phDeleteInput;
 		PHDeleteOutput phDeleteOutput;
+		PHDeleteLogic phDeleteLogic;
 		PHDeleteControl phDeleteControl;
 		
 		// Khai báo biến tham chiếu chức năng cập nhật
 		PHUpdateDAO phUpdateDAO;
 		PHUpdateInput phUpdateInput;
 		PHUpdateOutput phUpdateOutput;
+		PHUpdateLogic phUpdateLogic;
 		PHUpdateControl phUpdateControl;
 		
 		// Khai báo biến tham chiếu chức năng tìm kiếm
 		PHSearchDAO phSearchDAO;
 		PHSearchInput phSearchInput;
 		PHSearchOutput phSearchOutput;
+		PHSearchLogic phSearchLogic;
 		PHSearchControl phSearchControl;
 		
 		// Khai báo biến tham chiếu chức năng tổng số lượng phòng học từng loại
@@ -91,6 +98,7 @@ public class AppQLPH {
 		PHFilterDAO phFilterDAO;
 		PHFilter phFilter;
 		PHFilterOutput phFilterOutput;
+		PHFilterLogic phFilterLogic;
 		PHFilterControl phFilterControl;
 		
 		// Khai báo biến tham chiếu menu
@@ -122,19 +130,22 @@ public class AppQLPH {
 		phDeleteDAO /* Bước 3 */ = /* Bước 2 */ new PHDeleteDAO();
 		phDeleteInput /* Bước 3 */ = /* Bước 2 */ new PHDeleteInput(keyboard, out);
 		phDeleteOutput /* Bước 3 */ = /* Bước 2 */ new PHDeleteOutput(out);
-		phDeleteControl /* Bước 3 */ = /* Bước 2 */ new PHDeleteControl(phDeleteDAO, phDeleteInput, phDeleteOutput);
+		phDeleteLogic = new PHDeleteLogic();
+		phDeleteControl /* Bước 3 */ = /* Bước 2 */ new PHDeleteControl(phDeleteDAO, phDeleteInput, phDeleteOutput, phDeleteLogic);
 		
 		// Chức năng cập nhật
 		phUpdateDAO /* Bước 3 */ = /* Bước 2 */ new PHUpdateDAO();
 		phUpdateInput /* Bước 3 */ = /* Bước 2 */ new PHUpdateInput(keyboard, out);
 		phUpdateOutput /* Bước 3 */ = /* Bước 2 */ new PHUpdateOutput(out);
-		phUpdateControl /* Bước 3 */ = /* Bước 2 */ new PHUpdateControl(phUpdateDAO, phUpdateInput, phUpdateOutput);
+		phUpdateLogic = new PHUpdateLogic();
+		phUpdateControl /* Bước 3 */ = /* Bước 2 */ new PHUpdateControl(phUpdateDAO, phUpdateInput, phUpdateOutput, phUpdateLogic);
 		
 		// Chức năng tìm kiếm
 		phSearchDAO /* Bước 3 */ = /* Bước 2 */ new PHSearchDAO();
 		phSearchInput /* Bước 3 */ = /* Bước 2 */ new PHSearchInput(keyboard, out);
 		phSearchOutput /* Bước 3 */ = /* Bước 2 */ new PHSearchOutput(out);
-		phSearchControl /* Bước 3 */ = /* Bước 2 */ new PHSearchControl(phSearchDAO, phSearchInput, phSearchOutput);
+		phSearchLogic = new PHSearchLogic();
+		phSearchControl /* Bước 3 */ = /* Bước 2 */ new PHSearchControl(phSearchDAO, phSearchInput, phSearchOutput, phSearchLogic);
 		
 		// Chức năng tổng số lượng phòng học từng loại
 		phCountDAO /* Bước 3 */ = /* Bước 2 */ new PHCountDAO();
@@ -146,13 +157,12 @@ public class AppQLPH {
 		phFilterDAO /* Bước 3 */ = /* Bước 2 */ new PHFilterDAO();
 		phFilter /* Bước 3 */ = /* Bước 2 */ new PHFilter();
 		phFilterOutput /* Bước 3 */ = /* Bước 2 */ new PHFilterOutput(out);
-		phFilterControl /* Bước 3 */ = /* Bước 2 */ new PHFilterControl(phFilterDAO, phFilter, phFilterOutput);
+		phFilterLogic = new PHFilterLogic();
+		phFilterControl /* Bước 3 */ = /* Bước 2 */ new PHFilterControl(phFilterDAO, phFilter, phFilterOutput, phFilterLogic);
 		
 		// Hiển thị menu
 		menu /* Bước 3 */ = /* Bước 2 */ new PHMenu(keyboard, out, prompt);
 		
-		
-		// 
 		// Gửi thông điệp đến object PHAddControl
 		menu.setPHAddControl(phAddControl);
 		

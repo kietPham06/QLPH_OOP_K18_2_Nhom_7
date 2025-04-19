@@ -16,16 +16,15 @@ public class PHUpdateControl {
     // Ô 3 - Methods
     // Default Constructor
     public PHUpdateControl() {
-        this.phUpdateLogic = new PHUpdateLogic();
     }
 
     // Parameterized Constructor
-    public PHUpdateControl(PHUpdateDAO phUpdateDAO, PHUpdateInput phUpdateInput, PHUpdateOutput phUpdateOutput) {
+    public PHUpdateControl(PHUpdateDAO phUpdateDAO, PHUpdateInput phUpdateInput, PHUpdateOutput phUpdateOutput, PHUpdateLogic phUpdateLogic) {
         super();
         this.phUpdateDAO = phUpdateDAO;
         this.phUpdateInput = phUpdateInput;
         this.phUpdateOutput = phUpdateOutput;
-        this.phUpdateLogic = new PHUpdateLogic();
+        this.phUpdateLogic = phUpdateLogic;
     }
     
     public void update() {

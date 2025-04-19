@@ -12,15 +12,14 @@ public class PHSearchControl {
     private PHSearchLogic phSearchLogic;
     
     public PHSearchControl() {
-        this.phSearchLogic = new PHSearchLogic();
     }
 
-    public PHSearchControl(PHSearchDAO phSearchDAO, PHSearchInput phSearchInput, PHSearchOutput phSearchOutput) {
+    public PHSearchControl(PHSearchDAO phSearchDAO, PHSearchInput phSearchInput, PHSearchOutput phSearchOutput, PHSearchLogic phSearchLogic) {
         super();
         this.phSearchDAO = phSearchDAO;
         this.phSearchInput = phSearchInput;
         this.phSearchOutput = phSearchOutput;
-        this.phSearchLogic = new PHSearchLogic();
+        this.phSearchLogic = phSearchLogic;
     }
     
     public void search() {

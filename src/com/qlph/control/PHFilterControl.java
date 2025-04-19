@@ -20,12 +20,12 @@ public class PHFilterControl {
     }
 
     // Parameterized Constructor
-    public PHFilterControl(PHFilterDAO phFilterDAO, PHFilter phFilter, PHFilterOutput phFilterOutput) {
+    public PHFilterControl(PHFilterDAO phFilterDAO, PHFilter phFilter, PHFilterOutput phFilterOutput, PHFilterLogic phFilterLogic) {
         super();
         this.phFilterDAO = phFilterDAO;
         this.phFilter = phFilter;
         this.phFilterOutput = phFilterOutput;
-        this.phFilterLogic = new PHFilterLogic();
+        this.phFilterLogic = phFilterLogic;
     }
     
     public void filter() {

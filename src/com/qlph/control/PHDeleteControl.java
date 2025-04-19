@@ -20,12 +20,12 @@ public class PHDeleteControl {
     }
     
     // Parameterized Constructor
-    public PHDeleteControl(PHDeleteDAO phDeleteDAO, PHDeleteInput phDeleteInput, PHDeleteOutput phDeleteOutput) {
+    public PHDeleteControl(PHDeleteDAO phDeleteDAO, PHDeleteInput phDeleteInput, PHDeleteOutput phDeleteOutput, PHDeleteLogic phDeleteLogic) {
         super();
         this.phDeleteDAO = phDeleteDAO;
         this.phDeleteInput = phDeleteInput;
         this.phDeleteOutput = phDeleteOutput;
-        this.phDeleteLogic = new PHDeleteLogic();
+        this.phDeleteLogic = phDeleteLogic;
     }
     
     public void delete() {
